@@ -1,292 +1,650 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>賢者記憶體面板</title>
 
 <style>
+
 *{
     box-sizing:border-box;
 }
 
+
 body{
+
     margin:30px;
+
     background:#f5f7fb;
-    font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;
+
+    font-family:
+    "Microsoft JhengHei",
+    "Noto Sans TC",
+    sans-serif;
+
     color:#333;
+
 }
+
+
 
 h2{
+
     margin-bottom:20px;
+
     color:#2b5cab;
+
 }
+
+
+
+/* 表格外框 */
 
 .table-container{
+
+    width:100%;
+
     overflow-x:auto;
+
 }
+
+
+
+/* 主表格 */
 
 .memory-table{
+
     width:100%;
-    border-collapse:collapse;
+
     min-width:900px;
+
+    border-collapse:collapse;
+
     background:#fff;
+
     border-radius:12px;
+
     overflow:hidden;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.08);
+
 }
 
+
+
+/* 表頭 */
+
 .memory-table thead{
-    background:linear-gradient(135deg,#3b82f6,#2563eb);
+
+    background:
+    linear-gradient(
+        135deg,
+        #3b82f6,
+        #2563eb
+    );
+
     color:white;
+
 }
+
+
 
 .memory-table th,
 .memory-table td{
+
     padding:16px;
-    border-bottom:1px solid #e8e8e8;
+
+    border-bottom:
+    1px solid #e8e8e8;
+
     vertical-align:top;
+
     line-height:1.8;
+
 }
+
+
 
 .memory-table th{
-    font-size:16px;
+
     text-align:center;
-    letter-spacing:1px;
+
+    font-size:16px;
+
 }
+
+
 
 .memory-table tbody tr:hover{
+
     background:#f8fbff;
+
 }
 
-.memory-table tbody tr:last-child td{
-    border-bottom:none;
-}
+
 
 .memory-table td:first-child{
-    font-weight:bold;
+
     width:160px;
+
     text-align:center;
+
+    font-weight:bold;
+
     background:#fafcff;
+
 }
+
+
+
+/* 條件列表 */
 
 ul{
+
     margin:0;
+
     padding-left:20px;
+
 }
+
+
+
+/* 顏色標籤 */
+
 
 .memory-green{
+
     display:inline-block;
+
     background:#43a047;
-    color:#fff;
+
+    color:white;
+
     padding:4px 12px;
+
     border-radius:20px;
+
     font-size:13px;
+
     font-weight:bold;
+
+    margin-top:8px;
+
 }
+
+
 
 .memory-purple{
+
     display:inline-block;
+
     background:#8e44ad;
-    color:#fff;
+
+    color:white;
+
     padding:4px 12px;
+
     border-radius:20px;
+
     font-size:13px;
+
     font-weight:bold;
+
+    margin-top:8px;
+
 }
 
-.memory{
-    display:inline-block;
-    padding:6px 12px;
-    border-radius:20px;
-    background:#eef4ff;
-    border:1px solid #b8d0ff;
-    color:#1d4ed8;
-    font-weight:bold;
+
+
+/* 記憶圖片區 */
+
+.memory-list{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:10px;
+
 }
 
-@media (max-width:768px){
+
+
+.memory-list img{
+
+    width:120px;
+
+    max-width:100%;
+
+    height:auto;
+
+    border-radius:10px;
+
+    border:
+
+    1px solid #ddd;
+
+    transition:.2s;
+
+}
+
+
+
+.memory-list img:hover{
+
+    transform:scale(1.08);
+
+}
+
+
+
+/* 手機 */
+
+@media(max-width:768px){
+
 
     body{
+
         margin:10px;
+
     }
+
+
+    h2{
+
+        font-size:20px;
+
+    }
+
 
     .memory-table th,
     .memory-table td{
-        padding:12px;
+
+        padding:10px;
+
         font-size:14px;
+
     }
 
+
+    .memory-list img{
+
+        width:90px;
+
+    }
+
+
 }
+
+
+
 </style>
+
 </head>
+
+
 
 <body>
 
-<h2>🧙 賢者－記憶體面板</h2>
+
+<h2>
+🧙 賢者－記憶體面板
+</h2>
+
+
 
 <div class="table-container">
 
+
 <table class="memory-table">
 
+
 <thead>
+
 <tr>
-    <th>面板位置</th>
-    <th>效果</th>
-    <th>條件</th>
-    <th>可用記憶體</th>
+
+<th>
+面板位置
+</th>
+
+<th>
+效果
+</th>
+
+<th>
+條件
+</th>
+
+<th>
+可用記憶體
+</th>
+
 </tr>
+
 </thead>
+
+
 
 <tbody>
 
+
+
+<!-- 面板1 -->
+
 <tr>
+
 
 <td>
 記憶體面板 1
 </td>
 
+
 <td>
+
 <ul>
+
 <li>治療魔法 +9</li>
+
 <li>法術傷害 +5%</li>
+
 <li>法術防禦 +9</li>
+
 <li>特殊技能法術傷害 +5%</li>
+
 </ul>
+
 </td>
 
+
+
 <td>
+
 <ul>
+
 <li>Cost 10 或以上</li>
+
 <li>Cost 30 或以上</li>
+
 <li>Cost 50 或以上</li>
+
 <li>Cost 70 或以上</li>
+
 </ul>
 
-<div class="memory-green">綠色</div>
+
+<div class="memory-green">
+綠色
+</div>
+
 
 </td>
+
+
 
 <td>
 
-<span class="memory">
-    <img src="images/9c4940043c107f96292d9d6c2b8737ad.jpg" width="150">
-    <img src="images/c9db68715f224b55ad37c5bb756fd2d7.jpg" width="150">
-    <img src="images/4fd9e756584ad8c043fb3c0c46f0e698.jpg" width="150">
-    <img src="images/2e9ebe95229093c294514004ee421509.jpg" width="150">
-    <img src="images/c0c92d66b3a4ead4abe54e1300bad66e.jpg" width="150">
-</span>
+
+<div class="memory-list">
+
+
+<img src="images/4.jpg" alt="記憶">
+
+<img src="images/11.jpg" alt="記憶">
+
+<img src="images/2.jpg" alt="記憶">
+
+<img src="images/1.jpg" alt="記憶">
+
+<img src="images/9.jpg" alt="記憶">
+
+
+</div>
+
 
 </td>
+
 
 </tr>
 
+
+
+
+
+<!-- 面板2 -->
+
+
 <tr>
+
 
 <td>
 記憶體面板 2
 </td>
 
-<td>
-<ul>
-<li>攻擊魔法+9</li>
-<li>法術傷害+5%</li>
-<li>防禦力+9</li>
-<li>特殊技能法術傷害+5%</li>
-</ul>
-</td>
+
 
 <td>
+
 <ul>
+
+<li>攻擊魔法 +9</li>
+
+<li>法術傷害 +5%</li>
+
+<li>防禦力 +9</li>
+
+<li>特殊技能法術傷害 +5%</li>
+
+</ul>
+
+</td>
+
+
+
+<td>
+
+<ul>
+
 <li>Cost 10 或以上</li>
+
 <li>Cost 30 或以上</li>
+
 <li>Cost 50 或以上</li>
+
 <li>Cost 70 或以上</li>
+
 </ul>
 
-<div class="memory-purple">紫色</div>
+
+<div class="memory-purple">
+紫色
+</div>
+
 
 </td>
+
+
 
 <td>
 
-<span class="memory">
-    <img src="images/02166c7224021d60ef7a723251232ef4.jpg" width="150">
-    <img src="images/8c351f1d91dc2a833147669bef9b553e.jpg" width="150">
-    <img src="images/68378563d6cc384f002191bb8045c23f.jpg" width="150">
-    <img src="images/c9b0e6f8bc11a51641077110f1ea64c0.jpg" width="150">
-</span>
+
+<div class="memory-list">
+
+
+<img src="images/6.jpg">
+
+<img src="images/3.jpg">
+
+<img src="images/7.jpg">
+
+<img src="images/10.jpg">
+
+
+</div>
+
 
 </td>
+
+
+</tr>
+
+
+
+
+
+<!-- 面板3 -->
+
 
 <tr>
+
+
 <td>
 記憶體面板 3
 </td>
 
-<td>
-<ul>
-<li>魔法攻擊力+9</li>
-<li>法術傷害+4%</li>
-</ul>
-</td>
 
 <td>
+
 <ul>
+
+<li>魔法攻擊力 +9</li>
+
+<li>法術傷害 +4%</li>
+
+</ul>
+
+
+</td>
+
+
+
+<td>
+
+
+<ul>
+
 <li>？？？系</li>
-<li>最大HP 8或更低</li>
+
+<li>最大HP 8 或以下</li>
+
 </ul>
 
-<div class="memory-green">綠色</div>
+
+<div class="memory-green">
+綠色
+</div>
+
 
 </td>
+
+
 
 <td>
 
-<span class="memory">
-    <img src="images/16c4f5cf1523c907c59c6ddd6799cb0e.jpg" width="150">
-</span>
+
+<div class="memory-list">
+
+
+<img src="images/5.jpg">
+
+
+</div>
+
 
 </td>
+
 
 </tr>
 
+
+
+
+
+<!-- 面板4 -->
+
+
 <tr>
+
+
 <td>
 記憶體面板 4
 </td>
 
-<td>
-<ul>
-<li>治療魔法+9</li>
-<li>法術傷害+4%</li>
-</ul>
-</td>
 
 <td>
+
+
 <ul>
+
+<li>治療魔法 +9</li>
+
+<li>法術傷害 +4%</li>
+
+</ul>
+
+
+</td>
+
+
+
+<td>
+
+
+<ul>
+
 <li>？？？系</li>
-<li>攻擊魔法威力8或以下</li>
+
+<li>攻擊魔法威力 8 或以下</li>
+
 </ul>
 
-<div class="memory-purple">紫色</div>
+
+
+<div class="memory-purple">
+紫色
+</div>
+
 
 </td>
+
+
 
 <td>
 
-<span class="memory">
-    <img src="images/a3e21fa754b398cd65310fbe9df1cb9b.jpg" width="150">
-</span>
 
-</td>
+<div class="memory-list">
 
-</tr>
-  
-</tbody>
 
-</table>
+<img src="images/8.jpg">
+
 
 </div>
 
+
+</td>
+
+
+</tr>
+
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+
 </body>
+
 </html>
