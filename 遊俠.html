@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>遊俠 - 面板記憶體</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:30px;
+    background:#f5f7fb;
+    font-family:
+    "Microsoft JhengHei",
+    "Noto Sans TC",
+    sans-serif;
+    color:#333;
+}
+
+h2{
+    margin-bottom:20px;
+    color:#2b5cab;
+}
+
+/* 表格外框 */
+.table-container{
+    width:100%;
+    overflow-x:auto;
+}
+
+/* 主表格 */
+.memory-table{
+    width:100%;
+    min-width:900px;
+    border-collapse:collapse;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.08);
+}
+
+/* 表頭 */
+.memory-table thead{
+    background:
+    linear-gradient(
+        135deg,
+        #3b82f6,
+        #2563eb
+    );
+    color:white;
+}
+
+.memory-table th,
+.memory-table td{
+    padding:16px;
+    border-bottom:
+    1px solid #e8e8e8;
+    vertical-align:top;
+    line-height:1.8;
+}
+
+.memory-table th{
+    text-align:center;
+    font-size:16px;
+}
+
+.memory-table tbody tr:hover{
+    background:#f8fbff;
+}
+
+.memory-table td:first-child{
+    width:160px;
+    text-align:center;
+    font-weight:bold;
+    background:#fafcff;
+}
+
+/* 條件列表 */
+ul{
+    margin:0;
+    padding-left:20px;
+}
+
+/* 顏色標籤 */
+.memory-blue{
+    display:inline-block;
+    background:#1e88e5;
+    color:white;
+    padding:4px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.memory-red{
+    display:inline-block;
+    background:#e53935;
+    color:white;
+    padding:4px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+/* 記憶圖片區 */
+.memory-list{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+}
+
+.memory-list img{
+    width:120px;
+    max-width:100%;
+    height:auto;
+    border-radius:10px;
+    border:
+    1px solid #ddd;
+    transition:.2s;
+}
+
+.memory-list img:hover{
+    transform:scale(1.08);
+}
+
+/* 手機 */
+@media(max-width:768px){
+    body{
+        margin:10px;
+    }
+
+    h2{
+        font-size:20px;
+    }
+
+    .memory-table th,
+    .memory-table td{
+        padding:10px;
+        font-size:14px;
+    }
+
+    .memory-list img{
+        width:90px;
+    }
+}
+</style>
+</head>
+
+<body>
+<h2>
+遊俠－面板記憶體
+</h2>
+
+<div class="table-container">
+	<table class="memory-table">
+		<thead>
+			<tr>
+				<th>
+					面板位置
+				</th>
+				<th>
+					效果
+				</th>
+				<th>
+					條件
+				</th>
+				<th>
+					可用記憶體
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+	<!-- 面板1 -->
+			<tr>
+				<td>
+					記憶體面板 1
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li>COST 10以上</li>
+						<li>COST 30以上</li>
+						<li>COST 50以上</li>
+						<li>COST 70以上</li>
+					</ul>
+					<div class="memory-blue">
+						藍色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板2 -->
+			<tr>
+				<td>
+					記憶體面板 2
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li>COST 10以上</li>
+						<li>COST 30以上</li>
+						<li>COST 50以上</li>
+						<li>COST 70以上</li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板3 -->
+			<tr>
+				<td>
+					記憶體面板 3
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板4 -->
+			<tr>
+				<td>
+					記憶體面板 4
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板5 -->
+			<tr>
+				<td>
+					記憶體面板 5
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板6 -->
+			<tr>
+				<td>
+					記憶體面板 6
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板7 -->
+			<tr>
+				<td>
+					記憶體面板 7
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板8 -->
+			<tr>
+				<td>
+					記憶體面板 8
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板9 -->
+			<tr>
+				<td>
+					記憶體面板 9
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+	<!-- 面板10 -->
+			<tr>
+				<td>
+					記憶體面板 10
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+				</td>
+				<td>
+					<ul>
+						<li></li>
+						<li></li>
+						<li></li>
+						<li></li>
+					</ul>
+					<div class="memory-red">
+						紅色
+					</div>
+				</td>
+				<td>
+					<div class="memory-list">
+						<img src="images/4.jpg">
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+</body>
+
+</html>
