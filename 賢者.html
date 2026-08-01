@@ -1,38 +1,175 @@
-<table border="1">
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>賢者記憶體面板</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:30px;
+    background:#f5f7fb;
+    font-family:"Microsoft JhengHei","Noto Sans TC",sans-serif;
+    color:#333;
+}
+
+h2{
+    margin-bottom:20px;
+    color:#2b5cab;
+}
+
+.table-container{
+    overflow-x:auto;
+}
+
+.memory-table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:900px;
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.memory-table thead{
+    background:linear-gradient(135deg,#3b82f6,#2563eb);
+    color:white;
+}
+
+.memory-table th,
+.memory-table td{
+    padding:16px;
+    border-bottom:1px solid #e8e8e8;
+    vertical-align:top;
+    line-height:1.8;
+}
+
+.memory-table th{
+    font-size:16px;
+    text-align:center;
+    letter-spacing:1px;
+}
+
+.memory-table tbody tr:hover{
+    background:#f8fbff;
+}
+
+.memory-table tbody tr:last-child td{
+    border-bottom:none;
+}
+
+.memory-table td:first-child{
+    font-weight:bold;
+    width:160px;
+    text-align:center;
+    background:#fafcff;
+}
+
+ul{
+    margin:0;
+    padding-left:20px;
+}
+
+.tag{
+    display:inline-block;
+    background:#43a047;
+    color:#fff;
+    padding:4px 10px;
+    border-radius:30px;
+    font-size:13px;
+    margin-top:8px;
+    font-weight:bold;
+}
+
+.memory{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    background:#eef4ff;
+    border:1px solid #b8d0ff;
+    color:#1d4ed8;
+    font-weight:bold;
+}
+
+@media (max-width:768px){
+
+    body{
+        margin:10px;
+    }
+
+    .memory-table th,
+    .memory-table td{
+        padding:12px;
+        font-size:14px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<h2>🧙 賢者－記憶體面板</h2>
+
+<div class="table-container">
+
+<table class="memory-table">
+
+<thead>
 <tr>
-  <td>
-    面版位置
-  </td>
-  <td>
-    效果
-  </td>
-  <td>
-    條件
-  </td>
-  <td>
-    可用記憶體
-  </td>
+    <th>面板位置</th>
+    <th>效果</th>
+    <th>條件</th>
+    <th>可用記憶體</th>
 </tr>
+</thead>
+
+<tbody>
+
 <tr>
-  <td>
-    記憶體面板 1
-  </td>
-  <td>
-    治療魔法+9，
-法術傷害+5%，
-法術防禦+9，
-特殊技能法術傷害+5%
-  </td>
-  <td>
-    cost 10 或以上
-，cost 30 或以上
-，cost 50 或以上
-，cost 70 或以上，
-綠色
-  </td>
-  <td>
-    可用記憶體
-  </td>
+
+<td>
+記憶體面板 1
+</td>
+
+<td>
+<ul>
+<li>治療魔法 +9</li>
+<li>法術傷害 +5%</li>
+<li>法術防禦 +9</li>
+<li>特殊技能法術傷害 +5%</li>
+</ul>
+</td>
+
+<td>
+<ul>
+<li>Cost 10 或以上</li>
+<li>Cost 30 或以上</li>
+<li>Cost 50 或以上</li>
+<li>Cost 70 或以上</li>
+</ul>
+
+<div class="tag">綠色記憶</div>
+
+</td>
+
+<td>
+
+<span class="memory">可用記憶體</span>
+
+</td>
+
 </tr>
+
+</tbody>
+
 </table>
 
+</div>
+
+</body>
+</html>
