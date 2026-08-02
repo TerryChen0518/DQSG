@@ -19,6 +19,32 @@ h2{
     color:#2b5cab;
 }
 
+@media (max-width:768px){
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr{
+        display:block;
+    }
+
+    thead{
+        display:none;
+    }
+
+    tr{
+        margin-bottom:15px;
+        border:1px solid #ccc;
+    }
+
+    td{
+        display:flex;
+        justify-content:space-between;
+    }
+}
+
 /* 表格外框 */
 .table-container{
     width:100%;
