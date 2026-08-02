@@ -12,6 +12,7 @@ body{
     "Noto Sans TC",
     sans-serif;
     color:#333;
+	margin:16px;
 }
 
 h2{
@@ -20,28 +21,49 @@ h2{
 }
 
 @media (max-width:768px){
-
-    table,
-    thead,
-    tbody,
-    th,
-    td,
-    tr{
+	body{
+		margin:8px;
+	}
+	
+    .memory-table,
+    .memory-table tbody,
+    .memory-table tr,
+    .memory-table td{
         display:block;
+        width:100%;
     }
 
-    thead{
+    .memory-table thead{
         display:none;
     }
 
-    tr{
-        margin-bottom:15px;
-        border:1px solid #ccc;
+    .memory-table tr{
+        margin-bottom:20px;
+        border:1px solid #ddd;
+        border-radius:12px;
+        background:#fff;
+        overflow:hidden;
     }
 
-    td{
-        display:flex;
-        justify-content:space-between;
+    .memory-table td{
+        border:none;
+        padding:12px;
+    }
+
+    .memory-table td:first-child{
+        width:auto;
+        background:#2b5cab;
+        color:white;
+        text-align:center;
+        font-size:18px;
+    }
+
+    .memory-list{
+        justify-content:flex-start;
+    }
+
+    .memory-list img{
+        width:80px;
     }
 }
 
@@ -54,13 +76,11 @@ h2{
 /* 主表格 */
 .memory-table{
     width:100%;
-    min-width:900px;
     border-collapse:collapse;
     background:#fff;
     border-radius:12px;
     overflow:hidden;
-    box-shadow:
-    0 8px 25px rgba(0,0,0,.08);
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
 }
 
 /* 表頭 */
