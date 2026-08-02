@@ -20,53 +20,6 @@ h2{
     color:#2b5cab;
 }
 
-@media (max-width:768px){
-	body{
-		margin:8px;
-	}
-	
-    .memory-table,
-    .memory-table tbody,
-    .memory-table tr,
-    .memory-table td{
-        display:block;
-        width:100%;
-    }
-
-    .memory-table thead{
-        display:none;
-    }
-
-    .memory-table tr{
-        margin-bottom:20px;
-        border:1px solid #ddd;
-        border-radius:12px;
-        background:#fff;
-        overflow:hidden;
-    }
-
-    .memory-table td{
-        border:none;
-        padding:12px;
-    }
-
-    .memory-table td:first-child{
-        width:auto;
-        background:#2b5cab;
-        color:white;
-        text-align:center;
-        font-size:18px;
-    }
-
-    .memory-list{
-        justify-content:flex-start;
-    }
-
-    .memory-list img{
-        width:80px;
-    }
-}
-
 /* 表格外框 */
 .table-container{
     width:100%;
@@ -113,10 +66,8 @@ h2{
 }
 
 .memory-table td:first-child{
-    width:160px;
-    text-align:center;
-    font-weight:bold;
-    background:#fafcff;
+    background:#64748b;
+    color:white;
 }
 
 /* 條件列表 */
@@ -203,23 +154,75 @@ ul{
     transform:scale(1.08);
 }
 
-/* 手機 */
-@media(max-width:768px){
-    body{
-        margin:10px;
-    }
 
-    h2{
-        font-size:20px;
-    }
-
-    .memory-table th,
+@media (max-width:768px){
+	body{
+		margin:8px;
+	}
+	
+    .memory-table,
+    .memory-table tbody,
+    .memory-table tr,
     .memory-table td{
-        padding:10px;
-        font-size:14px;
+        display:block;
+        width:100%;
+    }
+
+    .memory-table thead{
+		display:none;
+    }
+
+    .memory-table td:nth-child(1)::before{
+        content:"面板位置";
+    }
+
+    .memory-table td:nth-child(2)::before{
+        content:"效果";
+    }
+
+    .memory-table td:nth-child(3)::before{
+        content:"條件";
+    }
+
+    .memory-table td:nth-child(4)::before{
+        content:"可用記憶體";
+    }
+
+    .memory-table td::before{
+        display:block;
+        font-weight:bold;
+        color:#2563eb;
+        margin-bottom:8px;
+    }
+
+    .memory-table tr{
+        margin-bottom:20px;
+        border:1px solid #ddd;
+        border-radius:12px;
+        background:#fff;
+        overflow:hidden;
+    }
+
+    .memory-table td{
+        border:none;
+        padding:12px;
+    }
+
+	.memory-table td:first-child{
+		background:#6b7280;
+		color:#fff;
+		font-size:18px;
+		font-weight:bold;
+		text-align:center;
+		padding:14px;
+		border-radius:8px 8px 0 0;
+	}
+
+    .memory-list{
+        justify-content:flex-start;
     }
 
     .memory-list img{
-        width:90px;
+        width:80px;
     }
 }
