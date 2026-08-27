@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>經驗值計算器</title>
+<style>
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        font-family: "Microsoft JhengHei", system-ui, sans-serif;
+        background: linear-gradient(135deg, #172554, #312e81, #581c87);
+        color: #1f2937;
+    }
+    .card {
+        width: min(520px, 100%);
+        background: rgba(255,255,255,.96);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 20px 50px rgba(0,0,0,.3);
+    }
+    h1 {
+        margin: 0 0 8px;
+        text-align: center;
+        font-size: 28px;
+    }
+    .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 24px;
+    }
+    .item {
+        display: grid;
+        grid-template-columns: 1fr 110px;
+        gap: 12px;
+        align-items: center;
+        margin: 14px 0;
+        padding: 16px;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+    }
+    .name { font-weight: 700; }
+    .exp { color: #6b7280; font-size: 14px; margin-top: 4px; }
+    input {
+        width: 100%;
+        padding: 11px 10px;
+        font-size: 18px;
+        text-align: center;
+        border: 2px solid #d1d5db;
+        border-radius: 10px;
+        outline: none;
+    }
+    input:focus { border-color: #6366f1; }
+    .result {
+        margin-top: 22px;
+        padding: 22px;
+        text-align: center;
+        border-radius: 18px;
+        background: #eef2ff;
+    }
+    .label { color: #4f46e5; font-weight: 700; }
+    .total {
+        margin-top: 5px;
+        font-size: 36px;
+        font-weight: 800;
+        color: #312e81;
+    }
+    button {
+        width: 100%;
+        margin-top: 16px;
+        padding: 13px;
+        border: 0;
+        border-radius: 12px;
+        background: #4f46e5;
+        color: white;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    button:hover { background: #4338ca; }
+    .detail {
+        margin-top: 14px;
+        color: #6b7280;
+        font-size: 14px;
+        line-height: 1.8;
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>🧮 經驗值計算器</h1>
+    <div class="subtitle">輸入各種券的擁有數量，自動計算總經驗值</div>
+
+    <div class="item">
+        <div>
+            <div class="name">金屬史萊姆券</div>
+            <div class="exp">每張 32,750 EXP</div>
+        </div>
+        <input id="slime" type="number" min="0" step="1" value="0" oninput="calculate()">
+    </div>
+
+    <div class="item">
+        <div>
+            <div class="name">金屬三兄弟券</div>
+            <div class="exp">每張 90,700 EXP</div>
+        </div>
+        <input id="brothers" type="number" min="0" step="1" value="0" oninput="calculate()">
+    </div>
+
+    <div class="item">
+        <div>
+            <div class="name">流浪金屬券</div>
+            <div class="exp">每張 305,800 EXP</div>
+        </div>
+        <input id="wanderer" type="number" min="0" step="1" value="0" oninput="calculate()">
+    </div>
+
+    <div class="result">
+        <div class="label">總經驗值</div>
+        <div class="total" id="total">0 EXP</div>
+        <div class="detail" id="detail">尚未使用任何經驗券</div>
+    </div>
+
+    <button onclick="resetCalculator()">全部歸零</button>
+</div>
+
+<script>
+const EXP = {
+    slime: 32750,
+    brothers: 90700,
+    wanderer: 305800
+};
+
+function getCount(id) {
+    const value = Number(document.getElementById(id).value);
+    return Number.isFinite(value) && value > 0 ? Math.floor(value) : 0;
+}
+
+function formatNumber(value) {
+    return value.toLocaleString("zh-TW");
+}
+
+function calculate() {
+    const slime = getCount("slime");
+    const brothers = getCount("brothers");
+    const wanderer = getCount("wanderer");
+
+    const slimeExp = slime * EXP.slime;
+    const brothersExp = brothers * EXP.brothers;
+    const wandererExp = wanderer * EXP.wanderer;
+    const total = slimeExp + brothersExp + wandererExp;
+
+    document.getElementById("total").textContent =
+        formatNumber(total) + " EXP";
+
+    if (total === 0) {
+        document.getElementById("detail").textContent =
+            "尚未使用任何經驗券";
+        return;
+    }
+
+    document.getElementById("detail").innerHTML =
+        `金屬史萊姆：${formatNumber(slimeExp)} EXP<br>` +
+        `金屬三兄弟：${formatNumber(brothersExp)} EXP<br>` +
+        `流浪金屬：${formatNumber(wandererExp)} EXP`;
+}
+
+function resetCalculator() {
+    document.getElementById("slime").value = 0;
+    document.getElementById("brothers").value = 0;
+    document.getElementById("wanderer").value = 0;
+    calculate();
+}
+
+calculate();
+</script>
+
+</body>
+</html>
