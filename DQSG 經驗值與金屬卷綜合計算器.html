@@ -265,7 +265,7 @@ const expDatabase = {
 
 // ========================================
 // 上級職累積經驗值
-// 1 ~ 46 級
+// 1 ~ 51 級
 // ========================================
 
 const advancedExp = [
@@ -314,7 +314,12 @@ const advancedExp = [
     5974803,  // Lv.43
     6672403,  // Lv.44
     7422003,  // Lv.45
-    8224403   // Lv.46
+    8224403,  // Lv.46
+	9080403,  // Lv.47
+	9990803,  // Lv.48
+	10956403, // Lv.49
+	11978003, // Lv.50
+	13639603, // Lv.51
 ];
 
 
@@ -421,9 +426,9 @@ function renderLevelOptions() {
     targetLevelSelect.innerHTML = '';
 
     // 一般職最多 53 級
-    // 上級職最多 46 級
+    // 上級職最多 51 級
     const maxLevel =
-        jobType === 'basic' ? 53 : 46;
+        jobType === 'basic' ? 53 : 51;
 
     // 建立等級選項
     for (let i = 1; i <= maxLevel; i++) {
@@ -436,13 +441,8 @@ function renderLevelOptions() {
         option.text = `Lv.${i}`;
 
         // 一般職滿級
-        if (jobType === 'basic' && i === 55) {
-            option.text += ' (一般職滿級)';
-        }
-
-        // 上級職測算上限
-        if (jobType === 'advanced' && i === 46) {
-            option.text += ' (日網測算上限)';
+        if (i === 55) {
+            option.text += '(滿級)';
         }
 
         targetLevelSelect.appendChild(option);
@@ -458,10 +458,10 @@ function renderLevelOptions() {
 
     } else {
 
-        // 上級職預設 Lv.46
+        // 上級職預設 Lv.51
         // 一般職預設 Lv.53
         targetLevelSelect.value =
-            maxLevel === 46 ? 45 : 53;
+            maxLevel === 51 ? 51 : 53;
     }
 
     // 顯示 / 隱藏上級職提示
@@ -812,7 +812,6 @@ window.onload = function () {
 <div class="container">
     <header>
         <h1>🧮 DQSG 經驗值與金屬卷綜合計算器</h1>
-        <div class="subtitle">一般職 1~53 級 / 上級職 1~46 級精確累積經驗值</div>
     </header>
 
     <div class="grid">
@@ -839,7 +838,7 @@ window.onload = function () {
                 <select id="targetLevel" onchange="calculateUpgrade()">
                     <!-- 由 JavaScript 依職業類別自動生成等級選項 -->
                 </select>
-                <div id="limitNote" class="note-text">※ 提示：上級職目前僅有至 Lv.46 精確數據</div>
+                <div id="limitNote" class="note-text">※ 提示：上級職目前僅有至 Lv.51</div>
             </div>
 
             <div class="result-box">
