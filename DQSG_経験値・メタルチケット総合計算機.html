@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DQSG 経験値・メタルチケット総合計算機</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --advanced: #e67e22;
+            --advanced-dark: #d35400;
+            --border-color: #e2e8f0;
+            --success: #2ecc71;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1a365d;
+            margin-bottom: 5px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 850px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+
+        .card-full {
+            grid-column: 1 / -1;
+        }
+
+        h2 {
+            font-size: 20px;
+            border-left: 5px solid var(--primary);
+            padding-left: 10px;
+            margin-top: 0;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .card-advanced-header h2 {
+            border-left-color: var(--advanced);
+        }
+
+        /* 表單元素 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 14px;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+
+        .note-text {
+            font-size: 12px;
+            color: #e53e3e;
+            margin-top: 4px;
+            display: none;
+        }
+
+        /* 按鈕 */
+        .btn-reset {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background-color: #c53030;
+        }
+
+        /* 顯示區塊 */
+        .result-box {
+            background-color: #f7fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border: 1px dashed #cbd5e0;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+            padding-top: 8px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .val-highlight {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2b6cb0;
+        }
+
+        .val-alert {
+            color: #e67e22;
+        }
+
+        /* 最佳金屬券方案 */
+        #ticketRecommendation {
+            margin-top: 15px;
+        }
+
+        .ticket-plan {
+            background: #fffaf0;
+            border: 1px solid #f6ad55;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .ticket-plan-title {
+            font-weight: bold;
+            color: #c05621;
+            margin-bottom: 8px;
+        }
+
+        .ticket-plan-detail {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #fbd38d;
+            color: #744210;
+        }
+
+        .success-plan {
+            background: #f0fff4;
+            border-color: #9ae6b4;
+            color: #276749;
+        }
+
+        .success-plan .ticket-plan-title {
+            color: #276749;
+        }
+
+        /* 表格樣式 */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 10px 12px;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .badge-basic { background-color: var(--primary); }
+        .badge-adv { background-color: var(--advanced); }
+    </style>
+	
+	<script language="JavaScript">
+// ========================================
+// EXPデータベース
+// ========================================
+
+const expDatabase = {
+    basic: {},
+    advanced: {}
+};
+
+
+// ========================================
+// 上級職の累計経験値
+// 1 ~ 51 級
+// ========================================
+
+const advancedExp = [
+    0,        // Lv.1
+    14,       // Lv.2
+    51,       // Lv.3
+    139,      // Lv.4
+    291,      // Lv.5
+    563,      // Lv.6
+    883,      // Lv.7
+    1363,     // Lv.8
+    2003,     // Lv.9
+    2803,     // Lv.10
+    4883,     // Lv.11
+    8563,     // Lv.12
+    14163,    // Lv.13
+    22003,    // Lv.14
+    32403,    // Lv.15
+    46003,    // Lv.16
+    63443,    // Lv.17
+    85363,    // Lv.18
+    112403,   // Lv.19
+    145203,   // Lv.20
+    184403,   // Lv.21
+    230803,   // Lv.22
+    285203,   // Lv.23
+    348403,   // Lv.24
+    421203,   // Lv.25
+    504403,   // Lv.26
+    598803,   // Lv.27
+    705203,   // Lv.28
+    824403,   // Lv.29
+    957203,   // Lv.30
+    1122003,  // Lv.31
+    1319603,  // Lv.32
+    1550803,  // Lv.33
+    1816403,  // Lv.34
+    2117203,  // Lv.35
+    2454003,  // Lv.36
+    2827603,  // Lv.37
+    3238803,  // Lv.38
+    3688403,  // Lv.39
+    4186003,  // Lv.40
+    4732403,  // Lv.41
+    5328403,  // Lv.42
+    5974803,  // Lv.43
+    6672403,  // Lv.44
+    7422003,  // Lv.45
+    8224403,  // Lv.46
+	9080403,  // Lv.47
+	9990803,  // Lv.48
+	10956403, // Lv.49
+	11978003, // Lv.50
+	13774704, // Lv.51
+];
+
+
+// ========================================
+// 基本職の累計経験値
+// 1 ~ 54 級
+// ========================================
+
+const basicExp = [
+    0,        // Lv.1
+    9,        // Lv.2
+    32,       // Lv.3
+    87,       // Lv.4
+    182,      // Lv.5
+    352,      // Lv.6
+    552,      // Lv.7
+    852,      // Lv.8
+    1252,     // Lv.9
+    1752,     // Lv.10
+    3052,     // Lv.11
+    5352,     // Lv.12
+    8852,     // Lv.13
+    13742,    // Lv.14
+    20252,    // Lv.15
+    28752,    // Lv.16
+    39652,    // Lv.17
+    53352,    // Lv.18
+    70252,    // Lv.19
+    90752,    // Lv.20
+    115252,   // Lv.21
+    144252,   // Lv.22
+    178252,   // Lv.23
+    217752,   // Lv.24
+    263252,   // Lv.25
+    315252,   // Lv.26
+    374252,   // Lv.27
+    440752,   // Lv.28
+    515252,   // Lv.29
+    598252,   // Lv.30
+    701252,   // Lv.31
+    824752,   // Lv.32
+    969252,   // Lv.33
+    1135252,  // Lv.34
+    1323252,  // Lv.35
+    1533752,  // Lv.36
+    1767252,  // Lv.37
+    2023572,  // Lv.38
+    2305253,  // Lv.39
+    2616252,  // Lv.40
+    2957752,  // Lv.41
+    3330252,  // Lv.42
+    3734252,  // Lv.43
+    4170252,  // Lv.44
+    4638752,  // Lv.45
+    5140252,  // Lv.46
+    5675252,  // Lv.47
+    6244252,  // Lv.48
+    6847752,  // Lv.49
+    7486252,  // Lv.50
+	8524752,  // Lv.51
+	10063252,  // Lv.52
+	12201752,  // Lv.53
+	15040252,  // Lv.54
+];
+
+
+// ========================================
+// 配列を変換して
+// expDatabase.basic[level]
+// expDatabase.advanced[level]
+// 的格式
+// ========================================
+
+basicExp.forEach((exp, index) => {
+    const level = index + 1;
+    expDatabase.basic[level] = exp;
+});
+
+advancedExp.forEach((exp, index) => {
+    const level = index + 1;
+    expDatabase.advanced[level] = exp;
+});
+
+
+// ========================================
+// 目標レベルのドロップダウンを動的に生成
+// ========================================
+
+function renderLevelOptions() {
+
+    const jobType =
+        document.getElementById('jobType').value;
+
+    const targetLevelSelect =
+        document.getElementById('targetLevel');
+
+    const limitNote =
+        document.getElementById('limitNote');
+
+    // 現在選択されている値を記録
+    const currentValue =
+        targetLevelSelect.value;
+
+    // 現在の選択肢をクリア
+    targetLevelSelect.innerHTML = '';
+
+    // 基本職は最大Lv.54
+    // 上級職は最大Lv.51
+    const maxLevel =
+        jobType === 'basic' ? 54 : 51;
+
+    // レベルの選択肢を作成
+    for (let i = 1; i <= maxLevel; i++) {
+
+        const option =
+            document.createElement('option');
+
+        option.value = i;
+
+        option.text = `Lv.${i}`;
+
+        // 最大レベル
+        if (i === 55) {
+            option.text += '(滿級)';
+        }
+
+        targetLevelSelect.appendChild(option);
+    }
+
+    // 元の選択レベルを復元
+    if (
+        currentValue &&
+        Number(currentValue) <= maxLevel
+    ) {
+
+        targetLevelSelect.value = currentValue;
+
+    } else {
+
+        // 上級職のデフォルトはLv.51
+        // 基本職のデフォルトはLv.54
+        targetLevelSelect.value =
+            maxLevel === 51 ? 51 : 54;
+    }
+
+    // 上級職の注意書きを表示／非表示
+    limitNote.style.display =
+        jobType === 'advanced'
+            ? 'block'
+            : 'none';
+}
+
+
+// ========================================
+// 職業変更
+// ========================================
+
+function handleJobChange() {
+
+    renderLevelOptions();
+
+    calculateUpgrade();
+}
+
+
+// ========================================
+// 最適なメタルチケットの組み合わせを計算
+// ========================================
+
+function calculateBestTicketCombination(targetExp) {
+
+    const emptyResult = {
+        slime: 0,
+        brothers: 0,
+        vagrant: 0,
+        totalTickets: 0,
+        totalExp: 0,
+        wasteExp: 0
+    };
+
+    if (targetExp <= 0) {
+        return {
+            minTickets: { ...emptyResult },
+            minWaste: { ...emptyResult }
+        };
+    }
+
+
+    const slimeExp = 32750;
+    const brothersExp = 90700;
+    const vagrantExp = 305800;
+
+    let minTicketsResult = null;
+    let minWasteResult = null;
+
+
+    // 可能なはぐれメタル＋メタルブラザーズの組み合わせをすべて検索し、
+    // 残りのEXPを最少枚数のメタルスライムチケットで補います。
+    const maxVagrant = Math.ceil(targetExp / vagrantExp);
+
+    for (let vagrant = 0; vagrant <= maxVagrant; vagrant++) {
+
+        const maxBrothers = Math.ceil(targetExp / brothersExp);
+
+        for (let brothers = 0; brothers <= maxBrothers; brothers++) {
+
+            const currentExp =
+                vagrant * vagrantExp +
+                brothers * brothersExp;
+
+            const remainingExp =
+                targetExp - currentExp;
+
+            const slime =
+                remainingExp > 0
+                    ? Math.ceil(remainingExp / slimeExp)
+                    : 0;
+
+            const totalExp =
+                currentExp + slime * slimeExp;
+
+            const wasteExp =
+                totalExp - targetExp;
+
+            const totalTickets =
+                slime + brothers + vagrant;
+
+            const result = {
+                slime,
+                brothers,
+                vagrant,
+                totalTickets,
+                totalExp,
+                wasteExp
+            };
+
+
+            // 最少枚数：合計枚数が最少。同枚数なら余剰EXPが少ない方
+            if (
+                minTicketsResult === null ||
+                totalTickets < minTicketsResult.totalTickets ||
+                (
+                    totalTickets === minTicketsResult.totalTickets &&
+                    wasteExp < minTicketsResult.wasteExp
+                )
+            ) {
+                minTicketsResult = result;
+            }
+
+
+            // EXPの余り最少：余剰EXPが最少。同じ余剰なら枚数が少ない方
+            if (
+                minWasteResult === null ||
+                wasteExp < minWasteResult.wasteExp ||
+                (
+                    wasteExp === minWasteResult.wasteExp &&
+                    totalTickets < minWasteResult.totalTickets
+                )
+            ) {
+                minWasteResult = result;
+            }
+        }
+    }
+
+    return {
+        minTickets: minTicketsResult,
+        minWaste: minWasteResult
+    };
+}
+
+
+// ========================================
+// 最適なメタルチケットプランを表示
+// ========================================
+
+function updateTicketRecommendation(best, expGap) {
+
+    const container =
+        document.getElementById('ticketRecommendation');
+
+    if (!container) {
+        return;
+    }
+
+
+    if (expGap <= 0) {
+
+        container.innerHTML = `
+            <div class="ticket-plan success-plan">
+                <div class="ticket-plan-title">✓ 目標達成</div>
+                <div>メタルチケットを使用する必要はありません</div>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    const minTickets = best.minTickets;
+    const minWaste = best.minWaste;
+
+
+    container.innerHTML = `
+        <div class="ticket-plan">
+            <div class="ticket-plan-title">
+                🥇 最少枚数：${minTickets.totalTickets}枚
+            </div>
+
+            <div>メタルスライム：<strong>${minTickets.slime}</strong>枚</div>
+            <div>メタルブラザーズ：<strong>${minTickets.brothers}</strong>枚</div>
+            <div>はぐれメタル：<strong>${minTickets.vagrant}</strong>枚</div>
+
+            <div class="ticket-plan-detail">
+                獲得 EXP：${minTickets.totalExp.toLocaleString()}<br>
+                余剰 EXP：${minTickets.wasteExp.toLocaleString()}
+            </div>
+        </div>
+
+        <div class="ticket-plan">
+            <div class="ticket-plan-title">
+                🥈 EXPの余り最少：${minWaste.wasteExp.toLocaleString()} EXP
+            </div>
+
+            <div>史萊姆券：<strong>${minWaste.slime}</strong> 張</div>
+            <div>三兄弟券：<strong>${minWaste.brothers}</strong> 張</div>
+            <div>流浪金屬券：<strong>${minWaste.vagrant}</strong> 張</div>
+
+            <div class="ticket-plan-detail">
+                合計枚数：${minWaste.totalTickets}枚<br>
+                提供 EXP：${minWaste.totalExp.toLocaleString()}
+            </div>
+        </div>
+    `;
+}
+
+
+// ========================================
+// 左側：レベルアップ目標計算
+// ========================================
+
+function calculateUpgrade() {
+
+    const jobType =
+        document.getElementById('jobType').value;
+
+    const currentExp =
+        parseInt(
+            document.getElementById('currentExp').value
+        ) || 0;
+
+    const targetLevel =
+        parseInt(
+            document.getElementById('targetLevel').value
+        ) || 1;
+
+    // 「実際の累計経験値データベース」から
+    // 目標レベルに必要な累計EXPを取得
+    const targetExp =
+        expDatabase[jobType][targetLevel] || 0;
+
+    // あと必要なEXPを計算
+    let expGap =
+        targetExp - currentExp;
+
+    // 目標経験値を超えている場合は負数を表示しない
+    if (expGap < 0) {
+        expGap = 0;
+    }
+
+
+    // ========================================
+    // 3種類のメタルチケットの最適な組み合わせを計算
+    // ========================================
+
+    const best = calculateBestTicketCombination(expGap);
+
+
+    // ========================================
+    // 画面を更新
+    // ========================================
+
+    document.getElementById('targetExpDisplay').innerText =
+        targetExp.toLocaleString() + ' EXP';
+
+    document.getElementById('expGapDisplay').innerText =
+        expGap.toLocaleString() + ' EXP';
+
+
+    if (expGap > 0) {
+
+        const r = best.minTickets;
+
+        document.getElementById('suggestedTickets').innerText =
+            `最少枚数：${r.totalTickets}枚（メタルスライム ${r.slime}、メタルブラザーズ ${r.brothers}、はぐれメタル ${r.vagrant}）`;
+
+    } else {
+
+        document.getElementById('suggestedTickets').innerText =
+            '目標達成！消費する必要はありません';
+    }
+
+    updateTicketRecommendation(best, expGap);
+}
+
+
+// ========================================
+// 右側：メタルチケット所持枚数の計算
+// ========================================
+
+function calculateTickets() {
+
+    const tSlime =
+        parseInt(
+            document.getElementById('ticketSlime').value
+        ) || 0;
+
+    const tBrothers =
+        parseInt(
+            document.getElementById('ticketBrothers').value
+        ) || 0;
+
+    const tVagrant =
+        parseInt(
+            document.getElementById('ticketVagrant').value
+        ) || 0;
+
+
+    // 各種メタルチケットのEXP
+    const slimeExp = 32750;
+    const brothersExp = 90700;
+    const vagrantExp = 305800;
+
+
+    const total =
+        (tSlime * slimeExp) +
+        (tBrothers * brothersExp) +
+        (tVagrant * vagrantExp);
+
+
+    document.getElementById('totalTicketExp').innerText =
+        total.toLocaleString() + ' EXP';
+}
+
+
+// ========================================
+// リセット：レベルアップ計算機
+// ========================================
+
+function resetUpgradeCalc() {
+
+    document.getElementById('currentExp').value = 0;
+
+    document.getElementById('jobType').value = 'advanced';
+
+    handleJobChange();
+}
+
+
+// ========================================
+// リセット：メタルチケット計算機
+// ========================================
+
+function resetTicketCalc() {
+
+    document.getElementById('ticketSlime').value = 0;
+
+    document.getElementById('ticketBrothers').value = 0;
+
+    document.getElementById('ticketVagrant').value = 0;
+
+    calculateTickets();
+}
+
+
+// ========================================
+// 初期化
+// ========================================
+
+window.onload = function () {
+
+    renderLevelOptions();
+
+    calculateUpgrade();
+
+    calculateTickets();
+};
+	</script>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>🧮 DQSG 経験値・メタルチケット総合計算機</h1>
+    </header>
+
+    <div class="grid">
+        
+        <!-- 左側：必要経験値計算機 -->
+        <div class="card card-advanced-header">
+            <h2>🎯 職業レベルアップ目標計算</h2>
+            
+            <div class="form-group">
+                <label for="jobType">1. 職業タイプを選択</label>
+                <select id="jobType" onchange="handleJobChange()">
+                    <option value="basic">基本職</option>
+                    <option value="advanced" selected>上級職</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="currentExp">2. 現在の累計経験値 (EXP) を入力</label>
+                <input type="number" id="currentExp" value="0" min="0" oninput="calculateUpgrade()">
+            </div>
+
+            <div class="form-group">
+                <label for="targetLevel">3. 目標レベルを選択</label>
+                <select id="targetLevel" onchange="calculateUpgrade()">
+                    <!-- 由 JavaScript 依職業類別自動生成等級選項 -->
+                </select>
+                <div id="limitNote" class="note-text">※ 現在のデータでは、基本職はLv.1～54、上級職はLv.1～51です</div>
+            </div>
+
+            <div class="result-box">
+                <div class="result-item">
+                    <span>目標レベルに必要な累計経験値：</span>
+                    <span id="targetExpDisplay" class="val-highlight">0 EXP</span>
+                </div>
+                <div class="result-item">
+                    <span>あと必要な経験値：</span>
+                    <span id="expGapDisplay" class="val-highlight val-alert">0 EXP</span>
+                </div>
+                <div class="result-item" style="font-weight: bold; color: #2d3748;">
+                    <span>はぐれメタルチケット換算で必要な枚数：</span>
+                    <span id="suggestedTickets">0 張</span>
+                </div>
+            </div>
+
+            <div id="ticketRecommendation"></div>
+
+            <button class="btn-reset" onclick="resetUpgradeCalc()">計算機をリセット</button>
+        </div>
+
+        <!-- 右側：メタルチケット累計計算機（GitHubの元機能を維持） -->
+        <div class="card">
+            <h2>🎫 メタルチケット所持経験値計算</h2>
+            
+            <div class="form-group">
+                <label for="ticketSlime">メタルスライムチケット（1枚 32,750 EXP）</label>
+                <input type="number" id="ticketSlime" value="0" min="0" oninput="calculateTickets()">
+            </div>
+
+            <div class="form-group">
+                <label for="ticketBrothers">メタルブラザーズチケット（1枚 90,700 EXP）</label>
+                <input type="number" id="ticketBrothers" value="0" min="0" oninput="calculateTickets()">
+            </div>
+
+            <div class="form-group">
+                <label for="ticketVagrant">はぐれメタルチケット（1枚 305,800 EXP）</label>
+                <input type="number" id="ticketVagrant" value="0" min="0" oninput="calculateTickets()">
+            </div>
+
+            <div class="result-box" style="background-color: #f0fff4; border-color: #c6f6d5;">
+                <div class="result-item" style="font-weight: bold;">
+                    <span>所持メタルチケットの合計経験値：</span>
+                    <span id="totalTicketExp" style="color: var(--success); font-size: 20px;">0 EXP</span>
+                </div>
+            </div>
+            <button class="btn-reset" onclick="resetTicketCalc()">チケット枚数をリセット</button>
+        </div>
+	</div>
+</div>
+
+</body>
