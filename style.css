@@ -185,6 +185,13 @@ ul{
     transform:scale(1.08);
 }
 
+/* 記憶滑鼠事件封鎖 */
+.mem-card.disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 
 @media (max-width:768px){
 	body{
