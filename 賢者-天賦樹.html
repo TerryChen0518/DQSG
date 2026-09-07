@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="zh-TW"><meta charset="UTF-8"><title>Demo</title>
+<style>#popup{display:none;position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:#fff;border:1px solid #666;padding:20px}#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4)}</style>
+<body>
+<div style="position:relative;display:inline-block;">
+
+    <img src="images/賢者 Tree.png" usemap="#m">
+
+    <div style="
+        position:absolute;
+        left:50px;
+        top:50px;
+        width:130px;
+        height:90px;
+        border:3px solid red;
+        background:rgba(255,0,0,.25);
+        pointer-events:none;
+    "></div>
+
+	<div style="
+		position:absolute;
+		left:475px;
+		top:220px;
+		width:120px;
+		height:120px;
+		border:3px solid blue;
+		border-radius:50%;
+		background:rgba(0,0,255,.25);
+		pointer-events:none;
+	"></div>
+
+</div>
+
+<map name="m">
+<area shape="rect" coords="50,50,180,140" href="#" data-info="方形區域<br><p style='color:red'>1</p>" onclick="showInfo(event,this)">
+<area shape="circle" coords="525,270,60" href="#" data-info="圓形區域" onclick="showInfo(event,this)">
+</map>
+<div id="overlay" onclick="closePopup()"></div><div id="popup"><div id="c"></div><button onclick="closePopup()">關閉</button></div>
+<script>
+function showInfo(e,a){e.preventDefault();c.innerHTML=a.dataset.info;overlay.style.display='block';popup.style.display='block';}
+function closePopup(){overlay.style.display='none';popup.style.display='none';}
+</script></body></html>
