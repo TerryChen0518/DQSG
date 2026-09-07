@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>DQSG - 魔法使い 面板模擬器</title>
+    <style>
+        :root {
+            --bg-board: #382918;
+            --board-border: #7e6037;
+            --cyan-line: #1ff5df;
+            --gold-border: #d4a753;
+            --active-glow: #ffdf79;
+        }
+        body {
+            background-color: #121214;
+            color: #ede8df;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 16px;
+            user-select: none;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        /* 畫布視窗 */
+        .board-viewport {
+            position: relative;
+            width: 440px;
+            height: 820px;
+            background: radial-gradient(circle, #4f3820 0%, #251b10 100%);
+            border: 3px solid var(--board-border);
+            border-radius: 8px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.9);
+            overflow: hidden;
+        }
+        svg.circuit-layer {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .circuit-path {
+            stroke: var(--cyan-line);
+            stroke-width: 4;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 5px rgba(31, 245, 223, 0.9));
+        }
+
+        /* 節點通用 */
+        .node-wrap {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* S 插槽 */
+        .slot-disc {
+            position: relative;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #4c2c70 0%, #221333 100%);
+            border: 3px solid #2ae4cf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .slot-disc:hover { transform: scale(1.1); }
+        /* 條件符合時的金色發光外框 (還原截圖) */
+        .slot-disc.active-glow {
+            border-color: var(--active-glow);
+            box-shadow: 0 0 16px var(--active-glow), 0 0 25px rgba(255, 223, 121, 0.6);
+        }
+        .slot-disc.active-glow::before, .slot-disc.active-glow::after {
+            background: var(--active-glow) !important;
+        }
+        .slot-disc::before, .slot-disc::after {
+            content: '';
+            position: absolute;
+            width: 64px;
+            height: 4px;
+            background: #2ae4cf;
+            border-radius: 2px;
+            z-index: -1;
+        }
+        .slot-disc::after { transform: rotate(90deg); }
+        .slot-rank {
+            position: absolute;
+            top: 3px; left: 7px;
+            font-size: 13px;
+            font-weight: 900;
+            color: #b57dfa;
+            text-shadow: 0 0 4px #000;
+        }
+        .slot-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+        .status-badge {
+            margin-top: 2px;
+            font-size: 9px;
+            background: rgba(0,0,0,0.7);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        /* 菱形技能 */
+        .node-rhombus {
+            width: 48px;
+            height: 48px;
+            background: #501717;
+            border: 2px solid #2ae4cf;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 6px rgba(42, 228, 207, 0.5);
+        }
+        .rhombus-inner {
+            transform: rotate(-45deg);
+            font-size: 10px;
+            color: #ffdf9e;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        /* 六角形與圓形 */
+        .node-hex {
+            width: 32px;
+            height: 36px;
+            background: #233f38;
+            border: 2px solid #2ae4cf;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .node-cir {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #21352e;
+            border: 2px solid #2ae4cf;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .node-cir-inner { width: 14px; height: 14px; border-radius: 50%; background: #16241f; border: 1px solid #2ae4cf; }
+        .node-gold {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #4a3a1f;
+            border: 2px solid var(--gold-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: #ffd875;
+            font-weight: bold;
+        }
+
+        /* 右側面板 */
+        .side-control { width: 360px; display: flex; flex-direction: column; gap: 16px; }
+        .panel-box {
+            background: #1c1d22;
+            border: 1px solid #4a3e20;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #262830;
+        }
+        .btn {
+            padding: 8px 12px;
+            background: var(--gold-border);
+            color: #111;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* 彈窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-body {
+            width: 500px;
+            max-height: 80vh;
+            background: #20222a;
+            border: 2px solid var(--gold-border);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-grid {
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .mem-card {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: #17181d;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+        }
+        .mem-card:hover { border-color: var(--cyan-line); }
+        .mem-card.disabled { opacity: 0.35; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <!-- 技能面板畫布 -->
+    <div class="board-viewport">
+        <svg class="circuit-layer" id="circuit-svg"></svg>
+        <div id="nodes-layer"></div>
+    </div>
+
+    <!-- 右側資訊與控制 -->
+    <div class="side-control">
+        <div class="panel-box">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #333; padding-bottom:8px; margin-bottom:12px;">
+                <h3 style="margin:0; color:var(--gold-border);">魔法使い (イクミン)</h3>
+                <button class="btn" style="font-size:11px;" onclick="openWarehouse()">持有倉庫</button>
+            </div>
+            <div class="stat-row">
+                <span>Cost 消耗</span>
+                <strong id="cost-label">0 / 200</strong>
+            </div>
+            <div id="stats-breakdown" style="margin-top:8px;"></div>
+        </div>
+
+        <div class="panel-box">
+            <h4 style="margin:0 0 10px 0; color:var(--gold-border);">分享配置</h4>
+            <button class="btn" style="width:100%;" onclick="copyShareCode()">複製配置連結 (URL)</button>
+            <button class="btn" style="width:100%; background:#444; color:#fff; margin-top:8px;" onclick="resetSlots()">全部卸下</button>
+        </div>
+    </div>
+</div>
+
+<!-- 記憶體選擇彈窗 -->
+<div class="modal" id="slot-modal">
+    <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0; color:var(--gold-border);" id="modal-slot-title">配置記憶體</h3>
+            <button onclick="closeModal('slot-modal')" style="background:none; border:none; color:#fff; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <div id="slot-condition-hint" style="font-size:12px; color:#ffdf79; margin-top:6px;"></div>
+        <div class="modal-grid" id="slot-pick-list"></div>
+    </div>
+</div>
+
+<!-- 倉庫管理彈窗 -->
+<div class="modal" id="warehouse-modal">
+    <div class="modal-body">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="margin:0; color:var(--gold-border);">記憶體持有管理</h3>
+            <button onclick="closeModal('warehouse-modal')" style="background:none; border:none; color:#fff; font-size:18px; cursor:pointer;">✕</button>
+        </div>
+        <p style="font-size:12px; color:#aaa; margin:4px 0 10px 0;">調整擁有的記憶體數量：</p>
+        <div class="modal-grid" id="warehouse-list"></div>
+    </div>
+</div>
+
+<script src="./js/calculator.js"></script>
+<script>
+    const DEFAULT_ICON = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 44 44'><circle cx='22' cy='22' r='20' fill='%23221333' stroke='%232ae4cf' stroke-width='2'/><text x='22' y='27' font-size='14' text-anchor='middle' fill='%232ae4cf'>S</text></svg>";
+
+    let classData = null;
+    let userWarehouse = {};
+    let activeSlotIdx = null;
+    const sim = new PanelSimulator(8, 200);
+
+    function loadWarehouse() {
+        const saved = localStorage.getItem('dqsg_user_warehouse');
+        if (saved) {
+            userWarehouse = JSON.parse(saved);
+        } else {
+            sim.memories.forEach(m => userWarehouse[m.id] = 1);
+        }
+    }
+    function saveWarehouse() {
+        localStorage.setItem('dqsg_user_warehouse', JSON.stringify(userWarehouse));
+    }
+
+    async function init() {
+        await sim.loadData('./data/memories.json');
+        const res = await fetch('./data/classes.json');
+        const allClassData = await res.json();
+        classData = allClassData.mage;
+
+        sim.setSlotRules(classData.slotRules);
+        loadWarehouse();
+
+        if (window.location.hash) {
+            sim.importHash(window.location.hash.substring(1));
+        }
+
+        renderCircuit();
+        renderNodes();
+        updateStats();
+    }
+
+    function renderCircuit() {
+        const svg = document.getElementById('circuit-svg');
+        const nodeMap = new Map(classData.nodes.map(n => [n.id, n]));
+        svg.innerHTML = classData.connections.map(([fromId, toId]) => {
+            const a = nodeMap.get(fromId);
+            const b = nodeMap.get(toId);
+            if (!a || !b) return '';
+            return `<line class="circuit-path" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" />`;
+        }).join('');
+    }
+
+    function renderNodes() {
+        const container = document.getElementById('nodes-layer');
+        container.innerHTML = '';
+        const calcResult = sim.calculate();
+
+        classData.nodes.forEach(node => {
+            const wrap = document.createElement('div');
+            wrap.className = 'node-wrap';
+            wrap.style.left = `${node.x}px`;
+            wrap.style.top = `${node.y}px`;
+
+            if (node.type === 'memory_slot') {
+                const slotArrIdx = node.slotIndex - 1;
+                const mem = sim.slots[slotArrIdx];
+                const cond = calcResult.slotStatus[slotArrIdx];
+                const isGlowing = cond && cond.active;
+
+                wrap.innerHTML = `
+            <div class="slot-disc ${isGlowing ? 'active-glow' : ''}" onclick="openSlotPicker(${node.slotIndex})">
+              <span class="slot-rank">S</span>
+              ${mem ? `<img class="slot-img" src="${mem.icon || DEFAULT_ICON}">` : ''}
+            </div>
+            <div class="status-badge" style="color:${isGlowing ? '#ffdf79' : '#888'}">
+              ${node.name} (${isGlowing ? '發動' : '未發動'})
+            </div>
+          `;
+            } else if (node.type === 'skill_diamond') {
+                wrap.innerHTML = `<div class="node-rhombus"><div class="rhombus-inner">${node.label}</div></div>`;
+            } else if (node.type === 'hex_node') {
+                wrap.innerHTML = `<div class="node-hex"></div>`;
+            } else if (node.type === 'circle_node') {
+                wrap.innerHTML = `<div class="node-cir"><div class="node-cir-inner"></div></div>`;
+            } else if (node.type === 'gold_node') {
+                wrap.innerHTML = `<div class="node-gold">${node.label}</div>`;
+            }
+            container.appendChild(wrap);
+        });
+    }
+
+    function openSlotPicker(slotId) {
+        activeSlotIdx = slotId - 1;
+        const rule = classData.slotRules[slotId] || {};
+        document.getElementById('modal-slot-title').innerText = `配置 メモリパネル${slotId}`;
+
+        // 提示發動條件
+        let conditionParts = [];
+        if (rule.minCost) conditionParts.push(`Cost ≥ ${rule.minCost}`);
+        if (rule.tribe) conditionParts.push(`種族: ${rule.tribe}`);
+        if (rule.maxAtkMagic) conditionParts.push(`攻擊魔力 ≤ ${rule.maxAtkMagic}`);
+
+        const effectText = Object.entries(rule.effects || {}).map(([k, v]) => `${k} +${v}`).join(', ');
+        document.getElementById('slot-condition-hint').innerText =
+            `發動條件: ${conditionParts.join(' | ')} (達成效果: ${effectText})`;
+
+        const listEl = document.getElementById('slot-pick-list');
+
+        // 1. 計算已被其他插槽佔用的數量與現有 Cost 餘裕
+        const equippedCounts = {};
+        let currentBaseCost = 0;
+        sim.slots.forEach((mem, idx) => {
+            if (mem && idx !== activeSlotIdx) {
+                equippedCounts[mem.id] = (equippedCounts[mem.id] || 0) + 1;
+                currentBaseCost += mem.cost;
+            }
+        });
+
+        const options = [
+            { id: '', name: '【卸下記憶體】', cost: 0, effects: {}, grade: '-', tribe: '-' },
+            ...sim.memories
+        ];
+
+        listEl.innerHTML = options.map(m => {
+            if (!m.id) {
+                return `<div class="mem-card" onclick="selectSlotMemory('')"><strong>卸下</strong></div>`;
+            }
+
+            const owned = userWarehouse[m.id] || 0;
+            const used = equippedCounts[m.id] || 0;
+            const available = owned - used;
+
+            // 2. 嚴格驗證發動條件與 Cost 上限
+            let disabledReasons = [];
+            if (available <= 0) {
+                disabledReasons.push('無庫存');
+            }
+            if (rule.minCost && m.cost < rule.minCost) {
+                disabledReasons.push(`Cost不足 (需≥${rule.minCost})`);
+            }
+            if (rule.tribe && m.tribe !== rule.tribe) {
+                disabledReasons.push(`種族不符 (需${rule.tribe})`);
+            }
+            if (rule.maxAtkMagic && (m.effects['攻擊魔力'] || 0) > rule.maxAtkMagic) {
+                disabledReasons.push(`魔力超標 (需≤${rule.maxAtkMagic})`);
+            }
+            if (currentBaseCost + m.cost > classData.maxCost) {
+                disabledReasons.push('總Cost超標');
+            }
+
+            const isDisabled = disabledReasons.length > 0;
+            const errorTip = isDisabled ? `<div style="color:#ef4444; font-size:11px; margin-top:2px;">✕ ${disabledReasons.join('，')}</div>` : '';
+
+            return `
+      <div class="mem-card ${isDisabled ? 'disabled' : ''}"
+           onclick="${isDisabled ? '' : `selectSlotMemory('${m.id}')`}"
+           style="${isDisabled ? 'cursor: not-allowed; opacity: 0.35;' : ''}">
+        <img src="${m.icon || DEFAULT_ICON}" width="40" height="40" style="border-radius:50%; object-fit:cover;">
+        <div style="font-size:12px; flex:1;">
+          <div style="font-weight:bold; color:#fff;">[${m.grade}] ${m.name}</div>
+          <div style="color:#aaa;">種族: ${m.tribe || '無'} | Cost: ${m.cost}</div>
+          <div style="color:var(--gold-border)">庫存: ${available}/${owned}</div>
+          ${errorTip}
+        </div>
+      </div>
+    `;
+        }).join('');
+
+        document.getElementById('slot-modal').classList.add('active');
+    }
+
+    function selectSlotMemory(memId) {
+        sim.equip(activeSlotIdx, memId);
+        closeModal('slot-modal');
+        renderNodes();
+        updateStats();
+    }
+
+    function openWarehouse() {
+        const listEl = document.getElementById('warehouse-list');
+        listEl.innerHTML = sim.memories.map(m => `
+        <div class="mem-card" style="justify-content:space-between;">
+          <div style="font-size:12px;">
+            <div><strong>${m.name}</strong></div>
+            <div style="color:#aaa;">Cost: ${m.cost} | ${m.tribe || '無'}</div>
+          </div>
+          <input type="number" min="0" max="9" value="${userWarehouse[m.id] || 0}"
+                 style="width:45px; background:#111; color:#fff; border:1px solid #555; padding:2px; text-align:center;"
+                 onchange="updateWarehouseCount('${m.id}', this.value)">
+        </div>
+      `).join('');
+        document.getElementById('warehouse-modal').classList.add('active');
+    }
+
+    function updateWarehouseCount(memId, val) {
+        userWarehouse[memId] = Math.max(0, parseInt(val) || 0);
+        saveWarehouse();
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    function updateStats() {
+        const calcResult = sim.calculate();
+        const costEl = document.getElementById('cost-label');
+        costEl.textContent = `${calcResult.totalCost} / ${classData.maxCost}`;
+        costEl.style.color = calcResult.isCostOver ? '#ff4d4f' : '#2ae4cf';
+
+        const breakdownEl = document.getElementById('stats-breakdown');
+        const entries = Object.entries(calcResult.totalStats);
+        if (entries.length === 0) {
+            breakdownEl.innerHTML = `<div style="color:#777; font-size:12px;">尚未配置任何記憶體</div>`;
+            return;
+        }
+        breakdownEl.innerHTML = entries.map(([k, v]) => `
+        <div class="stat-row">
+          <span>${k}</span>
+          <strong style="color:#2ae4cf;">+${v}</strong>
+        </div>
+      `).join('');
+    }
+
+    function resetSlots() {
+        sim.slots = Array(8).fill(null);
+        sim.updateHash();
+        renderNodes();
+        updateStats();
+    }
+
+    function copyShareCode() {
+        navigator.clipboard.writeText(window.location.href);
+        alert('已複製魔法師配置連結！');
+    }
+
+    init();
+</script>
+</body>
+</html>

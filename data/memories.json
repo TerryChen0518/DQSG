@@ -1,0 +1,83 @@
+[
+  {
+    "id": "slime",
+    "name": "史萊姆",
+    "grade": "S",
+    "tribe": "スライム系",
+    "cost": 7,
+    "icon": "./images/001.png",
+    "effects": { "靈巧": 9 }
+  },
+  {
+    "id": "skele_phys",
+    "name": "骷髏士兵 (物理)",
+    "grade": "S",
+    "tribe": "ゾンビ系",
+    "cost": 10,
+    "icon": "./images/008.png",
+    "effects": { "物理耐性(%)": 3 }
+  },
+  {
+    "id": "skele_magic",
+    "name": "骷髏士兵 (咒文)",
+    "grade": "S",
+    "tribe": "ゾンビ系",
+    "cost": 10,
+    "icon": "./images/020.png",
+    "effects": { "呪文耐性(%)": 3 }
+  },
+  {
+    "id": "golem_breath",
+    "name": "巨像兵 (吐息)",
+    "grade": "S",
+    "tribe": "物質系",
+    "cost": 20,
+    "icon": "./images/021.png",
+    "effects": { "吐息耐性(%)": 3 }
+  },
+  {
+    "id": "ghost_debuff",
+    "name": "惡作劇鬼魂",
+    "grade": "B",
+    "tribe": "ゾンビ系",
+    "cost": 48,
+    "icon": "./images/022.png",
+    "effects": { "異常成功率(%)": 3, "物理傷害(%)": 5 }
+  },
+  {
+    "id": "golem_army",
+    "name": "巨像兵軍",
+    "grade": "S",
+    "tribe": "物質系",
+    "cost": 50,
+    "icon": "./images/030.png",
+    "effects": { "普通攻速(%)": 3, "必殺技物理傷害(%)": 5 }
+  },
+  {
+    "id": "boss_dragon",
+    "name": "真龍 (???系)",
+    "grade": "S",
+    "tribe": "???系",
+    "cost": 65,
+    "icon": "./images/032.png",
+    "effects": { "呪文傷害(%)": 5 }
+  },
+  {
+    "id": "heavy_metal",
+    "name": "金屬獵手",
+    "grade": "S",
+    "tribe": "物質系",
+    "cost": 70,
+    "icon": "./images/039.png",
+    "effects": { "攻擊魔力": 50 }
+  },
+  {
+    "id": "high_god",
+    "name": "暗黑神高階記憶",
+    "grade": "S",
+    "tribe": "???系",
+    "cost": 95,
+    "icon": "./images/040.png",
+    "effects": { "攻擊魔力": 80 }
+  }
+]
