@@ -265,7 +265,7 @@ const expDatabase = {
 
 // ========================================
 // 上級職の累計経験値
-// 1 ~ 51 級
+// 1 ~ 52 級
 // ========================================
 
 const advancedExp = [
@@ -320,6 +320,7 @@ const advancedExp = [
 	10956403, // Lv.49
 	11978003, // Lv.50
 	13774704, // Lv.51
+	15840909, // Lv.52
 ];
 
 
@@ -427,9 +428,9 @@ function renderLevelOptions() {
     targetLevelSelect.innerHTML = '';
 
     // 基本職は最大Lv.54
-    // 上級職は最大Lv.51
+    // 上級職は最大Lv.52
     const maxLevel =
-        jobType === 'basic' ? 54 : 51;
+        jobType === 'basic' ? 54 : 52;
 
     // レベルの選択肢を作成
     for (let i = 1; i <= maxLevel; i++) {
@@ -459,10 +460,10 @@ function renderLevelOptions() {
 
     } else {
 
-        // 上級職のデフォルトはLv.51
+        // 上級職のデフォルトはLv.52
         // 基本職のデフォルトはLv.54
         targetLevelSelect.value =
-            maxLevel === 51 ? 51 : 54;
+            maxLevel === 52 ? 52 : 54;
     }
 
     // 上級職の注意書きを表示／非表示
@@ -839,7 +840,7 @@ window.onload = function () {
                 <select id="targetLevel" onchange="calculateUpgrade()">
                     <!-- 由 JavaScript 依職業類別自動生成等級選項 -->
                 </select>
-                <div id="limitNote" class="note-text">※ 現在のデータでは、基本職はLv.1～54、上級職はLv.1～51です</div>
+                <div id="limitNote" class="note-text">※ 現在のデータでは、基本職はLv.1～54、上級職はLv.1～52です</div>
             </div>
 
             <div class="result-box">

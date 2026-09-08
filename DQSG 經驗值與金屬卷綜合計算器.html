@@ -265,7 +265,7 @@ const expDatabase = {
 
 // ========================================
 // 上級職累積經驗值
-// 1 ~ 51 級
+// 1 ~ 52 級
 // ========================================
 
 const advancedExp = [
@@ -320,6 +320,7 @@ const advancedExp = [
 	10956403, // Lv.49
 	11978003, // Lv.50
 	13774704, // Lv.51
+	15840909, // Lv.52
 ];
 
 
@@ -427,9 +428,9 @@ function renderLevelOptions() {
     targetLevelSelect.innerHTML = '';
 
     // 一般職最多 54 級
-    // 上級職最多 51 級
+    // 上級職最多 52 級
     const maxLevel =
-        jobType === 'basic' ? 54 : 51;
+        jobType === 'basic' ? 54 : 52;
 
     // 建立等級選項
     for (let i = 1; i <= maxLevel; i++) {
@@ -459,10 +460,10 @@ function renderLevelOptions() {
 
     } else {
 
-        // 上級職預設 Lv.51
+        // 上級職預設 Lv.52
         // 一般職預設 Lv.54
         targetLevelSelect.value =
-            maxLevel === 51 ? 51 : 54;
+            maxLevel === 52 ? 52 : 54;
     }
 
     // 顯示 / 隱藏上級職提示
@@ -839,7 +840,7 @@ window.onload = function () {
                 <select id="targetLevel" onchange="calculateUpgrade()">
                     <!-- 由 JavaScript 依職業類別自動生成等級選項 -->
                 </select>
-                <div id="limitNote" class="note-text">※ 提示：目前數據一般職 1 ~ 54 級，上級職 1 ~ 51</div>
+                <div id="limitNote" class="note-text">※ 提示：目前數據一般職 1 ~ 54 級，上級職 1 ~ 52</div>
             </div>
 
             <div class="result-box">
