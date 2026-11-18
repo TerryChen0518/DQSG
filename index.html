@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2563eb">
+<title>DQSG 面板記憶體</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="stylesheet" href="style.css">
+<script>
+// 在畫面繪製前就決定主題,避免深色使用者看到淺色閃一下
+(function () {
+	var theme;
+	try { theme = localStorage.getItem("dqsg-theme"); } catch (error) { /* 無法讀取就用系統設定 */ }
+	if (theme !== "light" && theme !== "dark") {
+		theme = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+	}
+	document.documentElement.dataset.theme = theme;
+})();
+</script>
+</head>
+
+<body>
+
+<header class="hero">
+	<div class="wrap">
+		<img class="hero-logo" src="favicon.ico" alt="">
+		<div>
+			<h1 id="page-title">DQSG 面板記憶體</h1>
+			<p id="page-sub">職業面板記憶體整理與實用計算器</p>
+		</div>
+	</div>
+</header>
+
+<!-- 頁面導覽 -->
+<nav class="page-nav"><div class="tabs" id="nav"></div></nav>
+
+<main class="wrap">
+	<!-- 深色模式切換(只在首頁顯示,位於右上角) -->
+	<button class="theme-toggle" id="theme-toggle" type="button" aria-label="切換深色模式">
+		<svg class="icon-moon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+			<path fill="currentColor" d="M12.3 3a9 9 0 1 0 8.7 11.6 7 7 0 0 1-8.7-11.6z"/>
+		</svg>
+		<svg class="icon-sun" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+			<circle cx="12" cy="12" r="4.5" fill="currentColor"/>
+			<path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/>
+		</svg>
+	</button>
+
+	<!-- 首頁 -->
+	<div id="home" hidden>
+		<section class="home-section">
+			<h3>職業面板記憶體</h3>
+			<div class="card-grid" id="class-cards"></div>
+		</section>
+		<section class="home-section">
+			<h3>計算器與工具</h3>
+			<div class="card-grid" id="tool-cards"></div>
+		</section>
+	</div>
+
+	<!-- 職業面板 -->
+	<div class="panel-grid" id="panel-view" hidden></div>
+
+	<p class="load-error" id="error" hidden></p>
+</main>
+
+<!-- 面板快速跳轉數字列 -->
+<nav class="panel-rail" id="panel-rail" aria-label="面板快速跳轉" hidden></nav>
+
+<script>
+const DATA_URL = "data/panels.json";
+const SITE_TITLE = "DQSG 面板記憶體";
+const SITE_SUB = "職業面板記憶體整理與實用計算器";
+
+// 職業外觀(圖示與主題色),以 data 內的職業 id 對應
+const CLASS_STYLE = {
+	sage: { icon: "🔮", accent: "#8e44ad" },
+	paladin: { icon: "🛡️", accent: "#f1c40f" },
+	ranger: { icon: "🏹", accent: "#1e88e5" },
+	battlemaster: { icon: "🥊", accent: "#e53935" },
+};
+
+const TOOLS = [
+	{ icon: "🧮", name: "經驗值與金屬卷綜合計算器", href: "DQSG 經驗值與金屬卷綜合計算器.html", accent: "#2563eb" },
+	{ icon: "🇯🇵", name: "経験値・メタルチケット総合計算機", note: "日文版", href: "DQSG_経験値・メタルチケット総合計算機.html", accent: "#e53935" },
+	{ icon: "🎫", name: "金屬卷經驗值計算器", href: "金屬卷經驗值計算器.html", accent: "#f59e0b" },
+	{ icon: "🧪", name: "體力回復藥計算器", href: "體力回復藥計算器.html", accent: "#43a047" },
+];
+
+const els = {
+	title: document.getElementById("page-title"),
+	sub: document.getElementById("page-sub"),
+	nav: document.getElementById("nav"),
+	home: document.getElementById("home"),
+	classCards: document.getElementById("class-cards"),
+	toolCards: document.getElementById("tool-cards"),
+	panelView: document.getElementById("panel-view"),
+	error: document.getElementById("error"),
+	rail: document.getElementById("panel-rail"),
+	themeToggle: document.getElementById("theme-toggle"),
+};
+
+let data = null;
+
+setupThemeToggle();
+
+function el(tag, options = {}, children = []) {
+	const node = document.createElement(tag);
+	if (options.className) node.className = options.className;
+	if (options.id) node.id = options.id;
+	if (options.text !== undefined) node.textContent = options.text;
+	if (options.href !== undefined) node.href = options.href;
+	if (options.src !== undefined) node.src = options.src;
+	if (options.alt !== undefined) node.alt = options.alt;
+	if (options.loading) node.loading = options.loading;
+	if (options.accent) node.style.setProperty("--accent", options.accent);
+	if (options.newTab) node.target = "_blank";
+	children.forEach((child) => node.appendChild(child));
+	return node;
+}
+
+function listOf(className, items) {
+	return el("ul", { className }, items.map((text) => el("li", { text })));
+}
+
+function classStyle(cls) {
+	return CLASS_STYLE[cls.id] ?? { icon: "⚔️", accent: "#2563eb" };
+}
+
+function card({ icon, name, note, href, accent, newTab }) {
+	return el("a", { href, accent, newTab }, [
+		el("span", { className: "card-icon", text: icon }),
+		el("span", { className: "card-text" }, [
+			el("span", { text: name }),
+			...(note ? [el("small", { text: note })] : []),
+		]),
+	]);
+}
+
+// 首頁頁籤只顯示房子圖示(用 currentColor,顏色會跟著頁籤狀態變化)
+function homeLink(isActive) {
+	const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+	svg.setAttribute("viewBox", "0 0 24 24");
+	svg.setAttribute("width", "22");
+	svg.setAttribute("height", "22");
+	svg.setAttribute("aria-hidden", "true");
+	const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	path.setAttribute("d", "M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z");
+	path.setAttribute("fill", "currentColor");
+	svg.appendChild(path);
+
+	const link = el("a", { href: "#", className: "nav-home" + (isActive ? " active" : "") }, [svg]);
+	link.setAttribute("aria-label", "首頁");
+	return link;
+}
+
+function renderNav(activeId) {
+	const links = [homeLink(!activeId)];
+	data.classes.forEach((cls) => {
+		links.push(el("a", {
+			href: "#" + cls.id,
+			text: cls.name,
+			className: cls.id === activeId ? "active" : "",
+		}));
+	});
+	els.nav.replaceChildren(...links);
+
+	// 手機上分頁列會橫向捲動,把目前的頁籤置中顯示
+	const active = els.nav.querySelector("a.active");
+	if (active) {
+		els.nav.scrollLeft = active.offsetLeft - (els.nav.clientWidth - active.offsetWidth) / 2;
+	}
+}
+
+function renderHome() {
+	els.classCards.replaceChildren(...data.classes.map((cls) => {
+		const style = classStyle(cls);
+		return card({
+			icon: style.icon,
+			name: cls.name,
+			note: cls.panels.length + " 個面板",
+			href: "#" + cls.id,
+			accent: style.accent,
+		});
+	}));
+	els.toolCards.replaceChildren(...TOOLS.map((tool) =>
+		card({ ...tool, href: encodeURI(tool.href), newTab: true })));
+}
+
+// 依 COST 由小到大排序(同 COST 維持資料原順序)
+function sortByCost(memories) {
+	return [...memories].sort((a, b) => a.cost - b.cost);
+}
+
+function renderPanelCard(panel, index) {
+	const colorLabel = data.colors[panel.color] ?? panel.color;
+	return el("article", { id: "panel-" + (index + 1), className: "panel-card c-" + panel.color }, [
+		el("div", { className: "panel-head" }, [
+			el("span", { className: "panel-name", text: panel.name }),
+			el("span", { className: "color-badge", text: colorLabel }),
+		]),
+		el("div", { className: "panel-body" }, [
+			el("p", { className: "label", text: "效果" }),
+			listOf("chips", panel.effects),
+			el("p", { className: "label", text: "條件" }),
+			listOf("conds", panel.conditions),
+			el("p", { className: "label", text: "可用記憶體" }),
+			el("div", { className: "memory-list" },
+				sortByCost(panel.memories).map((memory) =>
+					el("img", { src: memory.image, alt: "COST " + memory.cost, loading: "lazy" }))),
+		]),
+	]);
+}
+
+// ---------- 側邊面板數字列(跟隨畫面,點擊跳轉) ----------
+const FOCUS_LINE = 0.35; // 視窗高度的 35% 處視為「目前正在看的位置」
+
+// 剛點擊數字跳轉的紀錄:頁面捲到底時,後面的面板可能無法貼齊頂端,
+// 此時高亮要以使用者點的號碼為準,直到使用者自己再捲動為止
+let jumpPin = null;
+
+function buildRail(panels) {
+	jumpPin = null;
+	els.rail.replaceChildren(...panels.map((panel, index) => {
+		const button = el("button", { className: "rail-btn c-" + panel.color, text: String(index + 1) });
+		button.type = "button";
+		button.setAttribute("aria-label", "跳到" + panel.name);
+		button.addEventListener("click", () => {
+			document.getElementById("panel-" + (index + 1))?.scrollIntoView({ block: "start" });
+			jumpPin = { index, scrollY: window.scrollY };
+			updateRailActive();
+		});
+		return button;
+	}));
+}
+
+function updateRailActive() {
+	if (els.rail.hidden) return;
+	const cards = [...els.panelView.querySelectorAll(".panel-card")];
+	if (cards.length === 0) return;
+
+	let activeIndex = 0;
+	if (jumpPin && Math.abs(window.scrollY - jumpPin.scrollY) < 2) {
+		activeIndex = jumpPin.index;
+	} else {
+		jumpPin = null;
+		const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+		if (atBottom) {
+			activeIndex = cards.length - 1;
+		} else {
+			const line = window.innerHeight * FOCUS_LINE;
+			cards.forEach((card, index) => {
+				if (card.getBoundingClientRect().top <= line) activeIndex = index;
+			});
+		}
+	}
+	[...els.rail.children].forEach((button, index) => {
+		const isActive = index === activeIndex;
+		button.classList.toggle("active", isActive);
+		if (isActive) button.setAttribute("aria-current", "true");
+		else button.removeAttribute("aria-current");
+	});
+}
+
+// 最後幾張面板比較短時,頁面會因為捲到底而無法讓它們貼齊畫面頂端。
+// 在面板清單底部動態補上剛好夠用的空白,讓點任何一個號碼,該面板都能出現在畫面上方。
+const PANEL_TOP_OFFSET = 12; // 需與 style.css 的 .panel-card scroll-margin-top 一致
+
+function updateBottomSpace() {
+	if (els.panelView.hidden) return;
+	const cards = els.panelView.querySelectorAll(".panel-card");
+	const last = cards[cards.length - 1];
+	if (!last) return;
+	const mainPadding = parseFloat(getComputedStyle(els.panelView.parentElement).paddingBottom) || 0;
+	const needed = Math.max(0, window.innerHeight - last.offsetHeight - PANEL_TOP_OFFSET - mainPadding);
+	els.panelView.style.paddingBottom = Math.ceil(needed) + "px";
+}
+
+function onViewportChange() {
+	updateBottomSpace();
+	updateRailActive();
+}
+
+window.addEventListener("scroll", updateRailActive, { passive: true });
+window.addEventListener("resize", onViewportChange);
+window.addEventListener("load", onViewportChange);
+
+function route() {
+	const id = decodeURIComponent(location.hash.slice(1));
+	const cls = data.classes.find((c) => c.id === id);
+
+	renderNav(cls ? cls.id : null);
+	els.home.hidden = Boolean(cls);
+	els.panelView.hidden = !cls;
+	els.rail.hidden = !cls;
+	els.themeToggle.hidden = Boolean(cls); // 深色模式按鈕只放在首頁
+	window.scrollTo({ top: 0 });
+
+	if (!cls) {
+		els.title.textContent = SITE_TITLE;
+		els.sub.textContent = SITE_SUB;
+		document.title = SITE_TITLE;
+		return;
+	}
+	els.title.textContent = cls.name + "－面板記憶體";
+	els.sub.textContent = "共 " + cls.panels.length + " 個記憶體面板";
+	document.title = cls.name + " - 面板記憶體";
+	els.panelView.replaceChildren(...cls.panels.map(renderPanelCard));
+	updateBottomSpace();
+	buildRail(cls.panels);
+	updateRailActive();
+}
+
+// ---------- 深色 / 淺色模式切換 ----------
+function setupThemeToggle() {
+	const button = document.getElementById("theme-toggle");
+	const root = document.documentElement;
+
+	function syncLabel() {
+		button.setAttribute("aria-label", root.dataset.theme === "dark" ? "切換為淺色模式" : "切換為深色模式");
+	}
+
+	button.addEventListener("click", () => {
+		const next = root.dataset.theme === "dark" ? "light" : "dark";
+		root.dataset.theme = next;
+		try { localStorage.setItem("dqsg-theme", next); } catch (error) { /* 無痕模式等情況:本次有效即可 */ }
+		syncLabel();
+	});
+	syncLabel();
+}
+
+// ---------- 手機左右滑動切換頁面 ----------
+const SWIPE_MIN_DISTANCE = 60;   // 水平位移至少 60px 才算滑動
+const SWIPE_MAX_SLOPE = 0.6;     // 垂直位移不可超過水平位移的 60%,避免與上下捲動混淆
+const SWIPE_EDGE_GUARD = 24;     // 從螢幕邊緣開始的滑動留給瀏覽器的「上一頁」手勢
+
+function pageIds() {
+	return ["", ...data.classes.map((cls) => cls.id)];
+}
+
+function goToAdjacentPage(step) {
+	const ids = pageIds();
+	const current = Math.max(0, ids.indexOf(decodeURIComponent(location.hash.slice(1))));
+	const target = current + step;
+	if (target < 0 || target >= ids.length) return;
+	location.hash = ids[target];
+}
+
+function setupSwipe() {
+	let start = null;
+
+	document.addEventListener("touchstart", (event) => {
+		const touch = event.touches[0];
+		const onScroller = event.target.closest("#nav, #panel-rail");
+		const onEdge = touch.clientX < SWIPE_EDGE_GUARD || touch.clientX > window.innerWidth - SWIPE_EDGE_GUARD;
+		start = event.touches.length === 1 && !onScroller && !onEdge
+			? { x: touch.clientX, y: touch.clientY }
+			: null;
+	}, { passive: true });
+
+	document.addEventListener("touchend", (event) => {
+		if (!start) return;
+		const touch = event.changedTouches[0];
+		const dx = touch.clientX - start.x;
+		const dy = touch.clientY - start.y;
+		start = null;
+		if (Math.abs(dx) < SWIPE_MIN_DISTANCE || Math.abs(dy) > Math.abs(dx) * SWIPE_MAX_SLOPE) return;
+		goToAdjacentPage(dx < 0 ? 1 : -1); // 向左滑 → 下一頁,向右滑 → 上一頁
+	}, { passive: true });
+
+	document.addEventListener("touchcancel", () => { start = null; }, { passive: true });
+}
+
+async function init() {
+	try {
+		const response = await fetch(DATA_URL);
+		if (!response.ok) throw new Error("HTTP " + response.status);
+		data = await response.json();
+	} catch (error) {
+		els.error.textContent = "無法載入資料(" + error.message + ")。請透過網頁伺服器開啟(例如 GitHub Pages 或 npx serve),直接雙擊檔案無法讀取 JSON。";
+		els.error.hidden = false;
+		return;
+	}
+	renderHome();
+	window.addEventListener("hashchange", route);
+	route();
+	setupSwipe();
+}
+
+init();
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,1075 @@
+{
+  "colors": {
+    "green": "綠色",
+    "purple": "紫色",
+    "yellow": "黃色",
+    "blue": "藍色",
+    "red": "紅色"
+  },
+  "classes": [
+    {
+      "id": "sage",
+      "name": "賢者",
+      "panels": [
+        {
+          "name": "記憶體面板 1",
+          "effects": [
+            "回復魔力+9",
+            "咒文傷害+5%",
+            "咒文守備力+9",
+            "必殺技咒文傷害+5%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/a003.png",
+              "cost": 80
+            },
+            {
+              "image": "images/040.png",
+              "cost": 70
+            },
+            {
+              "image": "images/049.png",
+              "cost": 70
+            },
+            {
+              "image": "images/a033.png",
+              "cost": 82
+            },
+            {
+              "image": "images/a026.png",
+              "cost": 71
+            },
+            {
+              "image": "images/a030.png",
+              "cost": 91
+            },
+            {
+              "image": "images/a043.png",
+              "cost": 84
+            },
+            {
+              "image": "images/a046.png",
+              "cost": 95
+            },
+            {
+              "image": "images/a052.png",
+              "cost": 82
+            },
+            {
+              "image": "images/a061.png",
+              "cost": 95
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 2",
+          "effects": [
+            "攻擊魔力+9",
+            "咒文傷害+5%",
+            "耐力+9",
+            "必殺技咒文傷害+5%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "purple",
+          "memories": [
+            {
+              "image": "images/a016.png",
+              "cost": 81
+            },
+            {
+              "image": "images/a015.png",
+              "cost": 90
+            },
+            {
+              "image": "images/a022.png",
+              "cost": 90
+            },
+            {
+              "image": "images/a028.png",
+              "cost": 95
+            },
+            {
+              "image": "images/a044.png",
+              "cost": 70
+            },
+            {
+              "image": "images/a045.png",
+              "cost": 100
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 3",
+          "effects": [
+            "攻擊魔力+9",
+            "咒文傷害+4%"
+          ],
+          "conditions": [
+            "？？？系",
+            "最大HP 8以下"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/a008.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 4",
+          "effects": [
+            "回復魔力+9",
+            "咒文傷害+4%"
+          ],
+          "conditions": [
+            "？？？系",
+            "攻擊魔力8以下"
+          ],
+          "color": "purple",
+          "memories": [
+            {
+              "image": "images/a007.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 5",
+          "effects": [
+            "咒文守備力+9",
+            "咒文抗性+3%",
+            "必殺技咒文傷害+4%"
+          ],
+          "conditions": [
+            "COST 45以上",
+            "回復魔力60以上",
+            "COST 50以下"
+          ],
+          "color": "purple",
+          "memories": [
+            {
+              "image": "images/042.png",
+              "cost": 50
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 6",
+          "effects": [
+            "攻擊魔力+9",
+            "吐息抗性+3%",
+            "咒文傷害+4%"
+          ],
+          "conditions": [
+            "回復魔力25以上",
+            "COST 50以下",
+            "惡魔系"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/022.png",
+              "cost": 30
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 7",
+          "effects": [
+            "回復魔力+9",
+            "生命值回復效果+5%",
+            "必殺技咒文傷害+4%"
+          ],
+          "conditions": [
+            "COST 50以上",
+            "攻擊魔力50以上",
+            "史萊姆系"
+          ],
+          "color": "purple",
+          "memories": [
+            {
+              "image": "images/030.png",
+              "cost": 50
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 8",
+          "effects": [
+            "攻擊魔力+9",
+            "物理抗性+3%",
+            "咒文傷害+4%"
+          ],
+          "conditions": [
+            "COST 65以上",
+            "回復魔力55以上",
+            "COST 70以下"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/040.png",
+              "cost": 70
+            },
+            {
+              "image": "images/049.png",
+              "cost": 70
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 9",
+          "effects": [
+            "攻擊魔力+9",
+            "魔法失控率+3%",
+            "必殺技咒文傷害+4%",
+            "咒文傷害+6%"
+          ],
+          "conditions": [
+            "攻擊魔力12以上",
+            "回復魔力40以下",
+            "？？？系",
+            "COST 15以下"
+          ],
+          "color": "purple",
+          "memories": [
+            {
+              "image": "images/a037.png",
+              "cost": 15
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 10",
+          "effects": [
+            "耐力+9",
+            "全屬性傷害+3%",
+            "咒文傷害+4%",
+            "必殺技咒文傷害+6%"
+          ],
+          "conditions": [
+            "攻擊魔力12以上",
+            "回復魔力40以下",
+            "？？？系",
+            "COST 15以下"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/a036.png",
+              "cost": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "paladin",
+      "name": "聖騎士",
+      "panels": [
+        {
+          "name": "記憶體面板 1",
+          "effects": [
+            "最大HP+9",
+            "物理傷害+5%",
+            "力量+9",
+            "必殺技物理傷害+5%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/a004.png",
+              "cost": 84
+            },
+            {
+              "image": "images/a019.png",
+              "cost": 89
+            },
+            {
+              "image": "images/056.png",
+              "cost": 85
+            },
+            {
+              "image": "images/a027.png",
+              "cost": 70
+            },
+            {
+              "image": "images/a047.png",
+              "cost": 98
+            },
+            {
+              "image": "images/a056.png",
+              "cost": 72
+            },
+            {
+              "image": "images/a062.png",
+              "cost": 103
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 2",
+          "effects": [
+            "耐力+9",
+            "物理傷害+5%",
+            "咒文守備力+9",
+            "必殺技物理傷害+5%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/a003.png",
+              "cost": 80
+            },
+            {
+              "image": "images/040.png",
+              "cost": 70
+            },
+            {
+              "image": "images/049.png",
+              "cost": 70
+            },
+            {
+              "image": "images/a033.png",
+              "cost": 82
+            },
+            {
+              "image": "images/a026.png",
+              "cost": 71
+            },
+            {
+              "image": "images/a030.png",
+              "cost": 91
+            },
+            {
+              "image": "images/a043.png",
+              "cost": 84
+            },
+            {
+              "image": "images/a046.png",
+              "cost": 95
+            },
+            {
+              "image": "images/a052.png",
+              "cost": 82
+            },
+            {
+              "image": "images/a061.png",
+              "cost": 95
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 3",
+          "effects": [
+            "最大HP+9",
+            "物理傷害+3%"
+          ],
+          "conditions": [
+            "？？？系",
+            "咒文守備力8以下"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/001.png",
+              "cost": 5
+            },
+            {
+              "image": "images/a006.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 4",
+          "effects": [
+            "耐力+9",
+            "必殺技物理傷害+3%"
+          ],
+          "conditions": [
+            "？？？系",
+            "最大HP 8以下"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/a008.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 5",
+          "effects": [
+            "咒文守備力+9",
+            "咒文抗性+3%",
+            "必殺技物理傷害+3%"
+          ],
+          "conditions": [
+            "COST 60以下",
+            "攻擊力30以上",
+            "惡魔系"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/039.png",
+              "cost": 60
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 6",
+          "effects": [
+            "最大HP+9",
+            "吐息抗性+3%",
+            "物理傷害+3%"
+          ],
+          "conditions": [
+            "COST 25以上",
+            "鳥系",
+            "COST 30以下"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/008.png",
+              "cost": 30
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 7",
+          "effects": [
+            "耐力+9",
+            "物理傷害+3%",
+            "必殺技物理傷害+3%"
+          ],
+          "conditions": [
+            "COST 65以上",
+            "回復魔力60以下",
+            "元素系"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/049.png",
+              "cost": 70
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 8",
+          "effects": [
+            "力量+9",
+            "物理抗性+3%",
+            "物理傷害+3%"
+          ],
+          "conditions": [
+            "COST 60以上",
+            "COST 65以下",
+            "鳥系"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/051.png",
+              "cost": 60
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 9",
+          "effects": [
+            "咒文守備力+9",
+            "必殺技物理傷害+3%",
+            "全屬性抗性+3%",
+            "物理傷害+5%"
+          ],
+          "conditions": [
+            "咒文守備力12以上",
+            "回復魔力40以下",
+            "？？？系",
+            "COST 15以下"
+          ],
+          "color": "green",
+          "memories": [
+            {
+              "image": "images/a039.png",
+              "cost": 15
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 10",
+          "effects": [
+            "力量+9",
+            "物理傷害+3%",
+            "物理傷害+3%",
+            "必殺技物理傷害+5%"
+          ],
+          "conditions": [
+            "咒文守備力12以上",
+            "攻擊力40以下",
+            "？？？系",
+            "COST 15以下"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/a038.png",
+              "cost": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ranger",
+      "name": "遊俠",
+      "panels": [
+        {
+          "name": "記憶體面板 1",
+          "effects": [
+            "力量+9",
+            "物理傷害+10%",
+            "耐力+9",
+            "必殺技物理傷害+10%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/a005.png",
+              "cost": 86
+            },
+            {
+              "image": "images/a020.png",
+              "cost": 87
+            },
+            {
+              "image": "images/055.png",
+              "cost": 75
+            },
+            {
+              "image": "images/a029.png",
+              "cost": 100
+            },
+            {
+              "image": "images/a032.png",
+              "cost": 102
+            },
+            {
+              "image": "images/a053.png",
+              "cost": 88
+            },
+            {
+              "image": "images/a060.png",
+              "cost": 90
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 2",
+          "effects": [
+            "攻擊魔力+9",
+            "咒文傷害+10%",
+            "咒文守備力+9",
+            "必殺技咒文傷害+10%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "blue",
+          "memories": [
+            {
+              "image": "images/a018.png",
+              "cost": 82
+            },
+            {
+              "image": "images/050.png",
+              "cost": 80
+            },
+            {
+              "image": "images/a017.png",
+              "cost": 84
+            },
+            {
+              "image": "images/a024.png",
+              "cost": 70
+            },
+            {
+              "image": "images/a031.png",
+              "cost": 94
+            },
+            {
+              "image": "images/a051.png",
+              "cost": 100
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 3",
+          "effects": [
+            "力量+9",
+            "物理傷害+8%"
+          ],
+          "conditions": [
+            "？？？系",
+            "攻擊力8以下"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/a009.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 4",
+          "effects": [
+            "攻擊魔力+9",
+            "咒文傷害+8%"
+          ],
+          "conditions": [
+            "？？？系",
+            "攻擊魔力8以下"
+          ],
+          "color": "blue",
+          "memories": [
+            {
+              "image": "images/a010.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 5",
+          "effects": [
+            "咒文守備力+9",
+            "咒文抗性+3%",
+            "咒文傷害+8%"
+          ],
+          "conditions": [
+            "回復魔力20以上",
+            "COST 70以下",
+            "攻擊魔力20以下"
+          ],
+          "color": "blue",
+          "memories": [
+            {
+              "image": "images/020.png",
+              "cost": 40
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 6",
+          "effects": [
+            "最大HP+9",
+            "吐息抗性+3%",
+            "必殺技物理傷害+8%"
+          ],
+          "conditions": [
+            "COST 45以上",
+            "惡魔系",
+            "COST 50以下"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/021.png",
+              "cost": 50
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 7",
+          "effects": [
+            "力量+9",
+            "普通攻擊速度+2%",
+            "必殺技咒文傷害+8%"
+          ],
+          "conditions": [
+            "攻擊力40以上",
+            "COST 70以下",
+            "鳥系"
+          ],
+          "color": "blue",
+          "memories": [
+            {
+              "image": "images/032.png",
+              "cost": 40
+            },
+            {
+              "image": "images/a050.png",
+              "cost": 55
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 8",
+          "effects": [
+            "耐力+9",
+            "物理抗性+3%",
+            "物理傷害+8%"
+          ],
+          "conditions": [
+            "COST 70以上",
+            "COST 90以下",
+            "怪人系"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/055.png",
+              "cost": 75
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 9",
+          "effects": [
+            "最大HP+9",
+            "普通攻擊速度+3%",
+            "咒文傷害+8%",
+            "必殺技咒文傷害+10%"
+          ],
+          "conditions": [
+            "靈巧12以上",
+            "？？？系",
+            "攻擊力75以下",
+            "COST 15以下"
+          ],
+          "color": "blue",
+          "memories": [
+            {
+              "image": "images/a041.png",
+              "cost": 15
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 10",
+          "effects": [
+            "靈巧+9",
+            "全異常狀態抗性+3%",
+            "物理傷害+8%",
+            "必殺技物理傷害+10%"
+          ],
+          "conditions": [
+            "攻擊力12以上",
+            "？？？系",
+            "攻擊魔力50以下",
+            "COST 15以下"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/a040.png",
+              "cost": 15
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "battlemaster",
+      "name": "戰鬥大師",
+      "panels": [
+        {
+          "name": "記憶體面板 1",
+          "effects": [
+            "最大HP+9",
+            "物理傷害+5%",
+            "咒文守備力+9",
+            "必殺技物理傷害+5%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/a004.png",
+              "cost": 84
+            },
+            {
+              "image": "images/a019.png",
+              "cost": 89
+            },
+            {
+              "image": "images/056.png",
+              "cost": 85
+            },
+            {
+              "image": "images/a027.png",
+              "cost": 70
+            },
+            {
+              "image": "images/a047.png",
+              "cost": 98
+            },
+            {
+              "image": "images/a056.png",
+              "cost": 72
+            },
+            {
+              "image": "images/a062.png",
+              "cost": 103
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 2",
+          "effects": [
+            "力量+9",
+            "物理傷害+5%",
+            "耐力+9",
+            "必殺技物理傷害+5%"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/a005.png",
+              "cost": 86
+            },
+            {
+              "image": "images/a020.png",
+              "cost": 87
+            },
+            {
+              "image": "images/055.png",
+              "cost": 75
+            },
+            {
+              "image": "images/a029.png",
+              "cost": 100
+            },
+            {
+              "image": "images/a032.png",
+              "cost": 102
+            },
+            {
+              "image": "images/a053.png",
+              "cost": 88
+            },
+            {
+              "image": "images/a060.png",
+              "cost": 90
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 3",
+          "effects": [
+            "力量+9",
+            "物理傷害+4%"
+          ],
+          "conditions": [
+            "？？？系",
+            "攻擊力8以下"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/001.png",
+              "cost": 5
+            },
+            {
+              "image": "images/a006.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 4",
+          "effects": [
+            "最大HP+9",
+            "物理傷害+4%"
+          ],
+          "conditions": [
+            "？？？系",
+            "攻擊力8以下"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/a009.png",
+              "cost": 10
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 5",
+          "effects": [
+            "咒文守備力+9",
+            "咒文抗性+3%",
+            "必殺技物理傷害+4%"
+          ],
+          "conditions": [
+            "COST 45以上",
+            "惡魔系",
+            "COST 50以下"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/021.png",
+              "cost": 50
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 6",
+          "effects": [
+            "力量+9",
+            "吐息抗性+3%",
+            "物理傷害+4%"
+          ],
+          "conditions": [
+            "COST 25以上",
+            "回復魔力 10以下",
+            "鳥系"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/008.png",
+              "cost": 30
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 7",
+          "effects": [
+            "最大HP+9",
+            "會心率+2%",
+            "必殺技物理傷害+4%"
+          ],
+          "conditions": [
+            "回復魔力 40 以下",
+            "耐力 40 以上",
+            "怪人系"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/055.png",
+              "cost": 75
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 8",
+          "effects": [
+            "力量+9",
+            "物理抗性+3%",
+            "物理傷害+4%"
+          ],
+          "conditions": [
+            "COST 85以下",
+            "COST 70以上",
+            "鳥系"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/056.png",
+              "cost": 85
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 9",
+          "effects": [
+            "力量+9",
+            "會心率+3%",
+            "必殺技物理傷害+4%",
+            "物理傷害+6%"
+          ],
+          "conditions": [
+            "靈巧 15以上",
+            "？？？系",
+            "攻擊魔力 1以下",
+            "COST 15以下"
+          ],
+          "color": "red",
+          "memories": [
+            {
+              "image": "images/a072.png",
+              "cost": 15
+            }
+          ]
+        },
+        {
+          "name": "記憶體面板 10",
+          "effects": [
+            "耐力+9",
+            "物理傷害+3%",
+            "物理傷害+4%",
+            "必殺技物理傷害+6%"
+          ],
+          "conditions": [
+            "最大HP 15以上",
+            "？？？系",
+            "回復魔力 1以下",
+            "COST 15以下"
+          ],
+          "color": "yellow",
+          "memories": [
+            {
+              "image": "images/a073.png",
+              "cost": 15
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
