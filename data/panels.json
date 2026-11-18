@@ -1070,6 +1070,346 @@
           ]
         }
       ]
+    },
+    {
+      "id": "magicalwarrior",
+      "name": "魔法戰士",
+      "panels": [
+        {
+          "name": "記憶體面板 1",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 2",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 3",
+          "effects": [
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 4",
+          "effects": [
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 5",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 6",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 7",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 8",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 9",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 10",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        }
+      ]
+    },
+    {
+      "id": "pirate",
+      "name": "海賊",
+      "panels": [
+        {
+          "name": "記憶體面板 1",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 2",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "COST 10以上",
+            "COST 30以上",
+            "COST 50以上",
+            "COST 70以上"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 3",
+          "effects": [
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 4",
+          "effects": [
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 5",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 6",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 7",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 8",
+          "effects": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 9",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "red",
+          "memories": [
+          ]
+        },
+        {
+          "name": "記憶體面板 10",
+          "effects": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "conditions": [
+            "未知",
+            "未知",
+            "未知",
+            "未知"
+          ],
+          "color": "yellow",
+          "memories": [
+          ]
+        }
+      ]
     }
   ]
 }
